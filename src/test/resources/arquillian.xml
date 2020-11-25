@@ -7,6 +7,7 @@
         <configuration>
             <property name="adminHost">${payara.adminHost}</property>
             <property name="adminHttps">true</property>
+            <property name="ignoreCertificates">true</property>
             <property name="adminUser">admin</property>
             <property name="adminPassword">admin</property>
         </configuration>
