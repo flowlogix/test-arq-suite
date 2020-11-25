@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.flowlogix;
+package com.flowlogix.arqsuite;
 
 import com.flowlogix.testcontainers.MyFixedPortContainer;
 import org.junit.jupiter.api.BeforeAll;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.flowlogix;
+package com.flowlogix.arqsuite;
 
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.junit.jupiter.api.Test;
