@@ -96,6 +96,27 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>payara-local</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludedGroups>TestContainers</excludedGroups>
+                            <systemPropertyVariables>
+                                <payara.adminHost>localhost</payara.adminHost>
+                                <arquillian.launch>payara-remote</arquillian.launch>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <!-- Make sure latest Maven is used -->
