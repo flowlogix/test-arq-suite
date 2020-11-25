@@ -21,6 +21,6 @@ public class Deployments {
     @Deployment
     public static WebArchive deploy() {
         ++numOfDeployments;
-        return ShrinkWrap.create(WebArchive.class).addPackage("com.flowlogix");
+        return ShrinkWrap.create(WebArchive.class).addPackage(Deployments.class.getPackage());
     }
 }

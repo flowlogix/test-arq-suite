@@ -16,10 +16,12 @@ import org.junit.jupiter.api.Test;
 class NumberOfDeploymentsTest {
     @AfterAll
     static void checkDeployments() {
+        ContainerStartTest.payara.stop();
         assertEquals(1, Deployments.numOfDeployments, "Should only be one deployment");
     }
 
     @Test
     void dummy() {
+
     }
 }
