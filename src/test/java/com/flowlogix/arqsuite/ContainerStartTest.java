@@ -6,9 +6,9 @@
 package com.flowlogix.arqsuite;
 
 import com.flowlogix.testcontainers.MyFixedPortContainer;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
 
@@ -16,12 +16,12 @@ import org.testcontainers.utility.DockerImageName;
  *
  * @author lprimak
  */
-@Tag("TestContainers")
+@Ignore
 public class ContainerStartTest {
     public static GenericContainer<?> payara;
 
-    @BeforeAll
-    static void start() {
+    @BeforeClass
+    public static void start() {
         payara = new MyFixedPortContainer<>(DockerImageName.parse("payara/server-full"))
             .withFixedExposedPort(4848, 4848)
             .withFixedExposedPort(8080, 8080);
@@ -29,7 +29,7 @@ public class ContainerStartTest {
     }
 
     @Test
-    void dummy() {
+    public void dummy() {
 
     }
 }
