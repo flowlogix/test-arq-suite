@@ -41,15 +41,7 @@
         <dependency>
             <groupId>org.eu.ingwar.tools</groupId>
             <artifactId>arquillian-suite-extension</artifactId>
-            <version>1.2.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Suite Requirement - *** NEEDS UPDATING to commons-lang3 -->
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
+            <version>1.2.2-payara</version>
             <scope>test</scope>
         </dependency>
 
