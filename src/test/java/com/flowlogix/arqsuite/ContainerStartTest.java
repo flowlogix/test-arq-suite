@@ -5,29 +5,18 @@
  */
 package com.flowlogix.arqsuite;
 
-import com.flowlogix.testcontainers.FixedPortContainer;
-import org.junit.jupiter.api.BeforeAll;
+import com.flowlogix.testcontainers.TestContainerLifecycleExtension;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.utility.DockerImageName;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
  *
  * @author lprimak
  */
 @Tag("TestContainers")
+@ExtendWith(TestContainerLifecycleExtension.class)
 public class ContainerStartTest {
-    public static GenericContainer<?> payara;
-
-    @BeforeAll
-    static void start() {
-        payara = new FixedPortContainer<>(DockerImageName.parse("payara/server-full"))
-            .withFixedExposedPort(4848, 4848)
-            .withFixedExposedPort(8080, 8080);
-        payara.start();
-    }
-
     @Test
     void dummy() {
 
