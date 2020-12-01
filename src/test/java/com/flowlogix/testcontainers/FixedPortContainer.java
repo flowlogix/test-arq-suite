@@ -14,9 +14,9 @@ import org.testcontainers.utility.DockerImageName;
  * @author lprimak
  * @param <SELF>
  */
-public class MyFixedPortContainer<SELF extends MyFixedPortContainer<SELF>> extends GenericContainer<SELF> {
+public class FixedPortContainer<SELF extends FixedPortContainer<SELF>> extends GenericContainer<SELF> {
 
-    public MyFixedPortContainer(DockerImageName imageName) {
+    public FixedPortContainer(DockerImageName imageName) {
         super(imageName);
     }
 
