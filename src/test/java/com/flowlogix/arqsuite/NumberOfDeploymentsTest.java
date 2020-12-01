@@ -5,7 +5,6 @@
  */
 package com.flowlogix.arqsuite;
 
-import static com.flowlogix.arqsuite.ContainerStartTest.payara;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
@@ -17,9 +16,6 @@ import org.junit.Test;
 public class NumberOfDeploymentsTest {
     @AfterClass
     public static void checkDeployments() {
-        if (payara != null) {
-            payara.stop();
-        }
         assertEquals("Should only be one deployment", 1, Deployments.numOfDeployments);
     }
 
