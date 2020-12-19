@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
  * @author lprimak
  */
 @RunWith(Arquillian.class)
-public class DeploymentOneTest extends Deployments {
+public class DeploymentOneTest {
     @Test
     public void one() {
 
