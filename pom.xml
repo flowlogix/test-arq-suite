@@ -132,6 +132,27 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.commonjava.maven.plugins</groupId>
+                <artifactId>directory-maven-plugin</artifactId>
+                <version>0.3.1</version>
+                <executions>
+                    <execution>
+                        <id>directories</id>
+                        <goals>
+                            <goal>directory-of</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <property>test-arq-suite.basedir</property>
+                            <project>
+                                <groupId>${project.groupId}</groupId>
+                                <artifactId>test-arq-suite</artifactId>
+                            </project>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
 
         <pluginManagement>
@@ -152,7 +173,7 @@
                         <runOrder>alphabetical</runOrder>
                         <systemPropertyVariables>
                             <payara.adminHost>${payara.adminHost}</payara.adminHost>
-                            <arquillian.xml>${project.basedir}/arquillian.xml</arquillian.xml>
+                            <arquillian.xml>${test-arq-suite.basedir}/arquillian.xml</arquillian.xml>
                         </systemPropertyVariables>
                     </configuration>
                 </plugin>
