@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  * @author lprimak
  */
 @ExtendWith(ArquillianExtension.class)
-class DeploymentTwoTest extends Deployments {
+class DeploymentTwoTest {
     @Test
     void one() {
 
