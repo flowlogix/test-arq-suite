@@ -47,7 +47,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- JUnit 5 support -->
+        <!-- JUnit 4 support -->
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
