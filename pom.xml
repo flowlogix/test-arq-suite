@@ -14,8 +14,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-
-        <payara.adminHost>localhost</payara.adminHost>
+        <payara.version>5.2021.3</payara.version>
+        <payara.connection.type>payara-docker</payara.connection.type>
+        <payara.already.started>true</payara.already.started>
+        <adminHost>localhost</adminHost>
+        <adminPort>4848</adminPort>
     </properties>
 
     <dependencies>
@@ -25,7 +28,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.1</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
 
@@ -49,9 +52,9 @@
 
         <!-- JUnit 4 support -->
         <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
-            <version>1.7.0.Alpha6-payara</version>
+            <groupId>org.jboss.arquillian.junit5</groupId>
+            <artifactId>arquillian-junit5-container</artifactId>
+            <version>1.7.0.Alpha9</version>
             <scope>test</scope>
         </dependency>
 
@@ -59,8 +62,20 @@
         <dependency>
             <groupId>fish.payara.arquillian</groupId>
             <artifactId>arquillian-payara-server-remote</artifactId>
-            <version>2.3.1.1-arq-1.7.0.Alpha5</version>
+            <version>2.4.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- JDK 11 Dependencies -->
+        <dependency>
+            <groupId>jakarta.activation</groupId>
+            <artifactId>jakarta.activation-api</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>2.3.3</version>
         </dependency>
 
         <!-- Test Containers (to test against Payara via Docker) -->
@@ -79,22 +94,20 @@
 
     <profiles>
         <profile>
-            <id>payara-local</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <systemPropertyVariables>
-                                <payara.adminHost>localhost</payara.adminHost>
-                                <arquillian.launch>payara-remote</arquillian.launch>
-                                <dontUseTestContainers>true</dontUseTestContainers>
-                            </systemPropertyVariables>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
+            <id>payara-server-remote</id>
+            <properties>
+                <payara.connection.type>payara</payara.connection.type>
+                <payara.already.started>true</payara.already.started>
+                <excluded.groups>TestContainers</excluded.groups>
+            </properties>
+        </profile>
+        <profile>
+            <id>payara-server-managed</id>
+            <properties>
+                <payara.connection.type>payara</payara.connection.type>
+                <payara.already.started>${skipITs}</payara.already.started>
+                <excluded.groups>TestContainers</excluded.groups>
+            </properties>
         </profile>
     </profiles>
 
@@ -102,7 +115,6 @@
         <plugins>
             <!-- Make sure latest Maven is used -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>3.0.0-M3</version>
                 <executions>
@@ -120,6 +132,9 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.commonjava.maven.plugins</groupId>
@@ -142,20 +157,75 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>unpack-payara</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <overWrite>false</overWrite>
+                    <outputDirectory>${test-arq-suite.basedir}/target</outputDirectory>
+                    <markersDirectory>${test-arq-suite.basedir}/target/dependency-maven-plugin-markers</markersDirectory>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>fish.payara.distributions</groupId>
+                            <artifactId>payara</artifactId>
+                            <version>${payara.version}</version>
+                            <type>zip</type>
+                        </artifactItem>
+                    </artifactItems>
+                    <skip>${payara.already.started}</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>start-domain</id>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <arguments>
+                                <argument>start-domain</argument>
+                            </arguments>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-domain</id>
+                        <phase>post-integration-test</phase>
+                        <configuration>
+                            <arguments>
+                                <argument>stop-domain</argument>
+                            </arguments>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
 
         <pluginManagement>
             <plugins>
                 <!-- Up-to-date compiler plugin -->
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.1</version>
                 </plugin>
-                <!-- Up-to-date surefire plugin -->
+                <!-- Up-to-date failsafe plugin -->
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
                     <version>3.0.0-M5</version>
                     <configuration>
                         <properties>
@@ -164,12 +234,40 @@
                                 <value>com.flowlogix.testcontainers.TestContainerLifecycleListener</value>
                             </property>
                         </properties>
+                        <includes>**/*Test.java</includes>
                         <!-- make sure last test is when number of deployments is checked -->
                         <runOrder>alphabetical</runOrder>
                         <systemPropertyVariables>
-                            <payara.adminHost>${payara.adminHost}</payara.adminHost>
                             <arquillian.xml>${test-arq-suite.basedir}/arquillian.xml</arquillian.xml>
+                            <arquillian.launch>${payara.connection.type}</arquillian.launch>
+                            <adminHost>${adminHost}</adminHost>
+                            <adminPort>${adminPort}</adminPort>
                         </systemPropertyVariables>
+                        <excludedGroups>${excluded.groups}</excludedGroups>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <executable>${test-arq-suite.basedir}/target/payara5/bin/asadmin</executable>
+                        <skip>${payara.already.started}</skip>
                     </configuration>
                 </plugin>
             </plugins>
@@ -182,7 +280,7 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>1.7.0.Alpha6-payara</version>
+                <version>1.7.0.Alpha9</version>
                 <type>pom</type>
                 <scope>test</scope>
             </dependency>
@@ -198,18 +296,10 @@
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
-                <version>1.15.0</version>
+                <version>1.15.3</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <repositories>
-        <!-- Payara JUnit 5 support is only available in this repository for now (Alpha) -->
-        <repository>
-            <id>payara</id>
-            <url>https://nexus.payara.fish/repository/payara-artifacts</url>
-        </repository>
-    </repositories>
 </project>
