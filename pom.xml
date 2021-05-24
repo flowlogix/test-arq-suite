@@ -104,7 +104,6 @@
             <properties>
                 <payara.connection.type>payara</payara.connection.type>
                 <payara.already.started>true</payara.already.started>
-                <excluded.groups>TestContainers</excluded.groups>
             </properties>
             <build>
                 <plugins>
@@ -123,7 +122,6 @@
             <properties>
                 <payara.connection.type>payara</payara.connection.type>
                 <payara.already.started>${skipITs}</payara.already.started>
-                <excluded.groups>TestContainers</excluded.groups>
             </properties>
             <build>
                 <plugins>
