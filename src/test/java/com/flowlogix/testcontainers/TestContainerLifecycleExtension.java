@@ -8,6 +8,7 @@ package com.flowlogix.testcontainers;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 
 /**
@@ -22,7 +23,8 @@ public class TestContainerLifecycleExtension implements BeforeAllCallback, Exten
         if (payara == null) {
             payara = new FixedPortContainer<>(DockerImageName.parse("payara/server-full"))
                     .withFixedExposedPort(4848, 4848)
-                    .withFixedExposedPort(8080, 8080);
+                    .withFixedExposedPort(8080, 8080)
+                    .waitingFor(Wait.forLogMessage(".*Payara Server.*startup time.*\\n", 1));
             payara.start();
             context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put("TestContaiersContext", this);
         }
