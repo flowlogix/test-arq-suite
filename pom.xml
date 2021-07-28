@@ -23,6 +23,11 @@
 
     <dependencies>
         <!-- test dependencies -->
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>8.0.0</version>
+        </dependency>
 
         <!-- JUnit 5 Basic deps -->
         <dependency>
@@ -60,7 +65,7 @@
         <dependency>
             <groupId>org.jboss.arquillian.junit5</groupId>
             <artifactId>arquillian-junit5-container</artifactId>
-            <version>1.7.0.Alpha9</version>
+            <version>1.7.0.Alpha10</version>
             <scope>test</scope>
         </dependency>
 
@@ -68,7 +73,7 @@
         <dependency>
             <groupId>fish.payara.arquillian</groupId>
             <artifactId>arquillian-payara-server-remote</artifactId>
-            <version>2.4.2</version>
+            <version>2.4.4</version>
             <scope>test</scope>
         </dependency>
 
@@ -92,8 +97,14 @@
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.32</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
-            <version>1.7.30</version>
+            <version>1.7.32</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -280,7 +291,7 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>1.7.0.Alpha9</version>
+                <version>1.7.0.Alpha10</version>
                 <type>pom</type>
                 <scope>test</scope>
             </dependency>
@@ -296,7 +307,7 @@
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
-                <version>1.15.3</version>
+                <version>1.16.0</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
