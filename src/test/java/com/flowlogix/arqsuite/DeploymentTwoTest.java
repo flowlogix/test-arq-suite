@@ -5,23 +5,22 @@
  */
 package com.flowlogix.arqsuite;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
  *
  * @author lprimak
  */
-@RunWith(Arquillian.class)
-public class DeploymentTwoTest {
+@ExtendWith(ArquillianExtension.class)
+class DeploymentTwoTest {
     @Test
-    public void one() {
+    void one() {
 
     }
 
     @Test
-    public void two() {
+    void two() {
     }
 }

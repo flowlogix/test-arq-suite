@@ -5,7 +5,8 @@
  */
 package com.flowlogix.arqsuite;
 
-import org.jboss.arquillian.junit5.ArquillianExtension;
+import com.flowlogix.testcontainers.TestContainerLifecycleExtension;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -13,15 +14,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
  *
  * @author lprimak
  */
-@ExtendWith(ArquillianExtension.class)
-class DeploymentOneTest {
+@Tag("TestContainers")
+@ExtendWith(TestContainerLifecycleExtension.class)
+public class ContainerStartTest {
     @Test
-    void one() {
-
-    }
-
-    @Test
-    void two() {
+    void dummy() {
 
     }
 }
