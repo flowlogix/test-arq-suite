@@ -14,9 +14,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <payara.version>5.2021.3</payara.version>
+        <payara.version>5.2022.3</payara.version>
         <payara.connection.type>payara-docker</payara.connection.type>
-        <payara.already.started>true</payara.already.started>
+        <payara.already.started>${skipITs}</payara.already.started>
         <adminHost>localhost</adminHost>
         <adminPort>4848</adminPort>
     </properties>
