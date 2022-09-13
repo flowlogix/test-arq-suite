@@ -14,15 +14,20 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <payara.version>5.2021.3</payara.version>
+        <payara.version>5.2022.3</payara.version>
         <payara.connection.type>payara-docker</payara.connection.type>
-        <payara.already.started>true</payara.already.started>
+        <payara.already.started>${skipITs}</payara.already.started>
         <adminHost>localhost</adminHost>
         <adminPort>4848</adminPort>
     </properties>
 
     <dependencies>
         <!-- test dependencies -->
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>8.0.0</version>
+        </dependency>
 
         <!-- JUnit 4 Basic deps -->
         <dependency>
@@ -31,10 +36,15 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.9.0</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <version>5.7.2</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.9.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -60,7 +70,7 @@
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
-            <version>1.7.0.Alpha9</version>
+            <version>1.7.0.Alpha12</version>
             <scope>test</scope>
         </dependency>
 
@@ -68,7 +78,7 @@
         <dependency>
             <groupId>fish.payara.arquillian</groupId>
             <artifactId>arquillian-payara-server-remote</artifactId>
-            <version>2.4.2</version>
+            <version>2.4.6</version>
             <scope>test</scope>
         </dependency>
 
@@ -76,7 +86,7 @@
         <dependency>
             <groupId>jakarta.activation</groupId>
             <artifactId>jakarta.activation-api</artifactId>
-            <version>1.2.2</version>
+            <version>2.1.0</version>
         </dependency>
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
@@ -92,8 +102,14 @@
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
-            <version>1.7.30</version>
+            <version>2.0.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -142,7 +158,7 @@
             <!-- Make sure latest Maven is used -->
             <plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-M3</version>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
@@ -165,7 +181,7 @@
             <plugin>
                 <groupId>org.commonjava.maven.plugins</groupId>
                 <artifactId>directory-maven-plugin</artifactId>
-                <version>0.3.1</version>
+                <version>1.0</version>
                 <executions>
                     <execution>
                         <id>directories</id>
@@ -185,7 +201,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>unpack-payara</id>
@@ -197,7 +213,7 @@
                 </executions>
                 <configuration>
                     <overWrite>false</overWrite>
-                    <outputDirectory>${test-arq-suite.basedir}/target</outputDirectory>
+                    <outputDirectory>${test-arq-suite.basedir}/target/dependency</outputDirectory>
                     <markersDirectory>${test-arq-suite.basedir}/target/dependency-maven-plugin-markers</markersDirectory>
                     <artifactItems>
                         <artifactItem>
@@ -247,12 +263,12 @@
                 <!-- Up-to-date compiler plugin -->
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
+                    <version>3.10.1</version>
                 </plugin>
                 <!-- Up-to-date failsafe plugin -->
                 <plugin>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.0.0-M5</version>
+                    <version>3.0.0-M7</version>
                     <configuration>
                         <properties>
                             <property>
@@ -290,7 +306,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.1.0</version>
                     <configuration>
                         <executable>${test-arq-suite.basedir}/target/payara5/bin/asadmin</executable>
                         <skip>${payara.already.started}</skip>
@@ -306,7 +322,7 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>1.7.0.Alpha9</version>
+                <version>1.7.0.Alpha12</version>
                 <type>pom</type>
                 <scope>test</scope>
             </dependency>
@@ -322,7 +338,7 @@
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
-                <version>1.15.3</version>
+                <version>1.17.3</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
