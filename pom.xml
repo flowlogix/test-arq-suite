@@ -188,7 +188,7 @@
                 </executions>
                 <configuration>
                     <overWrite>false</overWrite>
-                    <outputDirectory>${test-arq-suite.basedir}/target</outputDirectory>
+                    <outputDirectory>${test-arq-suite.basedir}/target/dependency</outputDirectory>
                     <markersDirectory>${test-arq-suite.basedir}/target/dependency-maven-plugin-markers</markersDirectory>
                     <artifactItems>
                         <artifactItem>
