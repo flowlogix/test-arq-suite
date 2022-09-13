@@ -29,8 +29,13 @@
             <version>8.0.0</version>
         </dependency>
 
-        <!-- JUnit 5 Basic deps -->
+        <!-- JUnit 4 Basic deps -->
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.9.0</version>
@@ -61,10 +66,10 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- JUnit 5 support -->
+        <!-- JUnit 4 support -->
         <dependency>
-            <groupId>org.jboss.arquillian.junit5</groupId>
-            <artifactId>arquillian-junit5-container</artifactId>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
             <version>1.7.0.Alpha12</version>
             <scope>test</scope>
         </dependency>
@@ -92,7 +97,7 @@
         <!-- Test Containers (to test against Payara via Docker) -->
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
+            <artifactId>testcontainers</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -115,16 +120,36 @@
             <properties>
                 <payara.connection.type>payara</payara.connection.type>
                 <payara.already.started>true</payara.already.started>
-                <excluded.groups>TestContainers</excluded.groups>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>3.0.0-M5</version>
+                        <configuration>
+                            <properties combine.self="override"/>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>payara-server-managed</id>
             <properties>
                 <payara.connection.type>payara</payara.connection.type>
                 <payara.already.started>${skipITs}</payara.already.started>
-                <excluded.groups>TestContainers</excluded.groups>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>3.0.0-M5</version>
+                        <configuration>
+                            <properties combine.self="override"/>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
@@ -245,6 +270,12 @@
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>3.0.0-M7</version>
                     <configuration>
+                        <properties>
+                            <property>
+                                <name>listener</name>
+                                <value>com.flowlogix.testcontainers.TestContainerLifecycleListener</value>
+                            </property>
+                        </properties>
                         <includes>**/*Test.java</includes>
                         <!-- make sure last test is when number of deployments is checked -->
                         <runOrder>alphabetical</runOrder>
