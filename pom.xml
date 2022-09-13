@@ -16,7 +16,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <payara.version>5.2022.3</payara.version>
         <payara.connection.type>payara-docker</payara.connection.type>
-        <payara.already.started>${skipITs}</payara.already.started>
+        <payara.already.started>true</payara.already.started>
         <adminHost>localhost</adminHost>
         <adminPort>4848</adminPort>
     </properties>
@@ -277,7 +277,7 @@
                     <artifactId>exec-maven-plugin</artifactId>
                     <version>3.1.0</version>
                     <configuration>
-                        <executable>${test-arq-suite.basedir}/target/payara5/bin/asadmin</executable>
+                        <executable>${test-arq-suite.basedir}/target/dependency/payara5/bin/asadmin</executable>
                         <skip>${payara.already.started}</skip>
                     </configuration>
                 </plugin>
