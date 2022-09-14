@@ -5,17 +5,17 @@
  */
 package com.flowlogix.arqsuite;
 
-import org.junit.jupiter.api.AfterAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Test;
+import static org.testng.Assert.assertEquals;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.Test;
 
 /**
  *
  * @author lprimak
  */
 class NumberOfDeploymentsTest {
-    @AfterAll
-    static void checkDeployments() {
+    @AfterClass
+    void checkDeployments() {
         assertEquals(1, Deployments.numOfDeployments, "Should only be one deployment");
     }
 

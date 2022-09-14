@@ -5,18 +5,33 @@
  */
 package com.flowlogix.arqsuite;
 
-import com.flowlogix.testcontainers.TestContainerLifecycleExtension;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import com.flowlogix.testcontainers.FixedPortContainer;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.utility.DockerImageName;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Test;
 
 /**
  *
  * @author lprimak
  */
-@Tag("TestContainers")
-@ExtendWith(TestContainerLifecycleExtension.class)
+@Test(groups = "TestContainers")
 public class ContainerStartTest {
+    private  static GenericContainer<?> payara;
+
+    @BeforeSuite
+    public void beforeAll() {
+        if (payara == null) {
+            payara = new FixedPortContainer<>(DockerImageName.parse("payara/server-full:5.2022.3-jdk17"))
+                    .withFixedExposedPort(4848, 4848)
+                    .withFixedExposedPort(8080, 8080)
+//                    .withReuse(true)
+                    .waitingFor(Wait.forLogMessage(".*Payara Server.*startup time.*\\n", 1));
+            payara.start();
+        }
+    }
+
     @Test
     void dummy() {
 

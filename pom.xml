@@ -29,17 +29,12 @@
             <version>8.0.0</version>
         </dependency>
 
-        <!-- JUnit 5 Basic deps -->
+        <!-- TestNG Basic deps -->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.9.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.0</version>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <!-- version 7.6 and up does not work w/Arquillian -->
+            <version>7.5</version>
             <scope>test</scope>
         </dependency>
 
@@ -63,8 +58,8 @@
 
         <!-- JUnit 5 support -->
         <dependency>
-            <groupId>org.jboss.arquillian.junit5</groupId>
-            <artifactId>arquillian-junit5-container</artifactId>
+            <groupId>org.jboss.arquillian.testng</groupId>
+            <artifactId>arquillian-testng-container</artifactId>
             <version>1.7.0.Alpha12</version>
             <scope>test</scope>
         </dependency>
@@ -92,7 +87,7 @@
         <!-- Test Containers (to test against Payara via Docker) -->
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
+            <artifactId>testcontainers</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
