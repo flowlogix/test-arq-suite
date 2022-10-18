@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>
             <artifactId>arquillian-testng-container</artifactId>
-            <version>1.7.0.Alpha12</version>
+            <version>1.7.0.Alpha13</version>
             <scope>test</scope>
         </dependency>
 
@@ -93,13 +93,13 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -286,7 +286,7 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>1.7.0.Alpha12</version>
+                <version>1.7.0.Alpha13</version>
                 <type>pom</type>
                 <scope>test</scope>
             </dependency>
@@ -302,7 +302,7 @@
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
-                <version>1.17.3</version>
+                <version>1.17.5</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
