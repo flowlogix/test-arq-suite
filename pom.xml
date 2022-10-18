@@ -114,7 +114,6 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>3.0.0-M5</version>
                         <configuration>
                             <properties combine.self="override"/>
                         </configuration>
@@ -132,7 +131,6 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>3.0.0-M5</version>
                         <configuration>
                             <properties combine.self="override"/>
                         </configuration>
