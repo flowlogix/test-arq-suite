@@ -12,4 +12,7 @@
         </configuration>
     </container>
     <container qualifier="payara"/>
+    <extension qualifier="jacoco">
+        <property name="appendAsmLibrary">false</property>
+    </extension>
 </arquillian>
