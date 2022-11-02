@@ -19,7 +19,7 @@
         <payara.already.started>true</payara.already.started>
         <adminHost>localhost</adminHost>
         <adminPort>4848</adminPort>
-        <asm.version>9.3</asm.version>
+        <asm.version>9.4</asm.version>
         <jacoco.version>0.8.8</jacoco.version>
     </properties>
 
