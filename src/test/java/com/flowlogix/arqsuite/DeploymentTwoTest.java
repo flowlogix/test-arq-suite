@@ -5,7 +5,10 @@
  */
 package com.flowlogix.arqsuite;
 
+import com.flowlogix.examples.MyBean;
+import javax.inject.Inject;
 import org.jboss.arquillian.junit5.ArquillianExtension;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -15,9 +18,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
  */
 @ExtendWith(ArquillianExtension.class)
 class DeploymentTwoTest {
+    @Inject
+    MyBean bean;
+
     @Test
     void one() {
-
+        assertEquals("hello", bean.greeting());
     }
 
     @Test
