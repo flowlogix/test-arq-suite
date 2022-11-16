@@ -5,3 +5,24 @@ updates:
     open-pull-requests-limit: 50
     schedule:
       interval: "daily"
+
+  - package-ecosystem: "maven"
+    directory: "/"
+    target-branch: 'JUnit4'
+    open-pull-requests-limit: 50
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "maven"
+    directory: "/"
+    target-branch: 'JUnit4-Vintage'
+    open-pull-requests-limit: 50
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "maven"
+    directory: "/"
+    target-branch: 'TestNG'
+    open-pull-requests-limit: 50
+    schedule:
+      interval: "daily"
