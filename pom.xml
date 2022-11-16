@@ -81,7 +81,7 @@
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>2.3.3</version>
+            <version>3.0.1</version>
         </dependency>
 
         <!-- Test Containers (to test against Payara via Docker) -->
