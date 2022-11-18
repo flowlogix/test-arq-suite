@@ -34,7 +34,6 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <!-- version 7.6 and up does not work w/Arquillian -->
             <version>7.5</version>
             <scope>test</scope>
         </dependency>
@@ -57,7 +56,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- JUnit 5 support -->
+        <!-- TestNG Support -->
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>
             <artifactId>arquillian-testng-container</artifactId>
