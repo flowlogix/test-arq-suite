@@ -15,7 +15,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <payara.version>6.2022.1</payara.version>
-        <slf4j.version>2.0.4</slf4j.version>
+        <slf4j.version>2.0.5</slf4j.version>
         <arquillian.version>1.7.0.Alpha13.1-lp-nov18</arquillian.version>
         <payara.connection.type>payara-docker</payara.connection.type>
         <payara.already.started>true</payara.already.started>
