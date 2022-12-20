@@ -12,9 +12,11 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <payara.version>6.2022.1</payara.version>
+        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
+        <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
+        <payara.version>6.2022.2</payara.version>
+        <junit.version>5.9.1</junit.version>
         <slf4j.version>2.0.6</slf4j.version>
         <arquillian.version>1.7.0.Alpha13.1-lp-nov18</arquillian.version>
         <payara.connection.type>payara-docker</payara.connection.type>
@@ -29,19 +31,26 @@
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
             <version>10.0.0</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-web-api</artifactId>
+            <version>10.0.0</version>
+            <type>pom</type>
         </dependency>
 
         <!-- JUnit 5 Basic deps -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.9.1</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.1</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -77,18 +86,6 @@
             <artifactId>arquillian-payara-server-remote</artifactId>
             <version>3.0.alpha7</version>
             <scope>test</scope>
-        </dependency>
-
-        <!-- JDK 11 Dependencies -->
-        <dependency>
-            <groupId>jakarta.activation</groupId>
-            <artifactId>jakarta.activation-api</artifactId>
-            <version>2.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>4.0.0</version>
         </dependency>
 
         <!-- Test Containers (to test against Payara via Docker) -->
@@ -189,7 +186,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <overWrite>false</overWrite>
+                    <overWriteIfNewer>false</overWriteIfNewer>
                     <outputDirectory>${test-arq-suite.basedir}/target/dependency</outputDirectory>
                     <markersDirectory>${test-arq-suite.basedir}/target/dependency-maven-plugin-markers</markersDirectory>
                     <artifactItems>
@@ -272,6 +269,12 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <configuration>
                         <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <skipIfEmpty>true</skipIfEmpty>
                     </configuration>
                 </plugin>
                 <plugin>
