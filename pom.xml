@@ -257,7 +257,7 @@
                 <!-- Up-to-date failsafe plugin -->
                 <plugin>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.0.0-M7</version>
+                    <version>3.0.0-M8</version>
                     <configuration>
                         <properties>
                             <property>
