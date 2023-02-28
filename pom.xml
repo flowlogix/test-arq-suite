@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.release>8</maven.compiler.release>
         <payara.version>5.2022.5</payara.version>
         <slf4j.version>2.0.6</slf4j.version>
         <arquillian.version>1.7.0.Alpha14</arquillian.version>
