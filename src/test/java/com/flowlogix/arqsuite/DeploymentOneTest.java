@@ -5,7 +5,7 @@
  */
 package com.flowlogix.arqsuite;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import javax.sql.DataSource;
 import org.jboss.arquillian.testng.Arquillian;
 import static org.testng.Assert.assertNotNull;

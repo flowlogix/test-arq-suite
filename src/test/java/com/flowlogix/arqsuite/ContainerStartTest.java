@@ -23,7 +23,7 @@ public class ContainerStartTest {
     @BeforeSuite
     public void beforeAll() {
         if (payara == null) {
-            payara = new FixedPortContainer<>(DockerImageName.parse("payara/server-full:5.2022.3-jdk17"))
+            payara = new FixedPortContainer<>(DockerImageName.parse("payara/server-full:latest"))
                     .withFixedExposedPort(4848, 4848)
                     .withFixedExposedPort(8080, 8080)
 //                    .withReuse(true)
