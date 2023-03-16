@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.flowlogix.arqsuite;
 
 import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.slf4j.Logger;
 
@@ -27,6 +23,9 @@ public class Deployments {
         WebArchive archive = ShrinkWrap.create(WebArchive.class)
                 .addPackage(Deployments.class.getPackage())
                 .addPackages(true, Logger.class.getPackage())
+                .addAsWebInfResource(new StringAsset(
+                        "<payara-web-app><class-loader delegate=\"false\"/></payara-web-app>"),
+                        "payara-web.xml")
                 .addAsWebInfResource(String.format("META-INF/%s", SLF4J_IMPL),
                         String.format("classes/META-INF/%s", SLF4J_IMPL));
         return archive;
