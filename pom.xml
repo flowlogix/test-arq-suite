@@ -16,7 +16,7 @@
         <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
         <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
         <payara.version>6.2023.2</payara.version>
-        <junit.version>5.9.2</junit.version>
+        <junit.version>5.9.3</junit.version>
         <slf4j.version>2.0.7</slf4j.version>
         <arquillian.version>1.7.0.Alpha14</arquillian.version>
         <payara.connection.type>payara-docker</payara.connection.type>
