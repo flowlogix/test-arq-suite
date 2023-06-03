@@ -21,7 +21,8 @@ public class TestContainerLifecycleExtension implements BeforeAllCallback, Exten
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
         if (payara == null) {
-            payara = new FixedPortContainer<>(DockerImageName.parse("payara/server-full"))
+            payara = new FixedPortContainer<>(DockerImageName.parse(
+                    System.getProperty("imageName", "payara/server-full")))
                     .withFixedExposedPort(4848, 4848)
                     .withFixedExposedPort(8080, 8080)
                     .waitingFor(Wait.forLogMessage(".*Payara Server.*startup time.*\\n", 1));
