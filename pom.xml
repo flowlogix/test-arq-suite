@@ -265,7 +265,7 @@
                 <!-- Up-to-date failsafe plugin -->
                 <plugin>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.1.2</version>
                     <configuration>
                         <properties>
                             <property>
