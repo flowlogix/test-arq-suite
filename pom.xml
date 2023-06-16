@@ -12,7 +12,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>11</maven.compiler.release>
+        <jdk.version>11</jdk.version>
+        <maven.compiler.release>${jdk.version}</maven.compiler.release>
         <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
         <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
         <payara.version>6.2023.2</payara.version>
@@ -22,6 +23,7 @@
         <payara.already.started>true</payara.already.started>
         <adminHost>localhost</adminHost>
         <adminPort>4848</adminPort>
+        <imageName>payara/server-full</imageName>
     </properties>
 
     <dependencies>
@@ -280,6 +282,7 @@
                             <arquillian.launch>${payara.connection.type}</arquillian.launch>
                             <adminHost>${adminHost}</adminHost>
                             <adminPort>${adminPort}</adminPort>
+                            <imageName>${imageName}</imageName>
                         </systemPropertyVariables>
                         <excludedGroups>${excluded.groups}</excludedGroups>
                     </configuration>
