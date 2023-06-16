@@ -23,10 +23,10 @@ public class ContainerStartTest {
     @BeforeSuite
     public void beforeAll() {
         if (payara == null) {
-            payara = new FixedPortContainer<>(DockerImageName.parse("payara/server-full:latest"))
+            payara = new FixedPortContainer<>(DockerImageName.parse(
+                    System.getProperty("imageName", "payara/server-full")))
                     .withFixedExposedPort(4848, 4848)
                     .withFixedExposedPort(8080, 8080)
-//                    .withReuse(true)
                     .waitingFor(Wait.forLogMessage(".*Payara Server.*startup time.*\\n", 1));
             payara.start();
         }
