@@ -20,7 +20,8 @@ public class TestContainerLifecycleListener extends RunListener {
 
     @Override
     public void testRunStarted(Description description) throws Exception {
-        payara = new FixedPortContainer<>(DockerImageName.parse("payara/server-full"))
+        payara = new FixedPortContainer<>(DockerImageName.parse(
+                System.getProperty("imageName", "payara/server-full")))
                 .withFixedExposedPort(4848, 4848)
                 .withFixedExposedPort(8080, 8080);
         payara.start();
