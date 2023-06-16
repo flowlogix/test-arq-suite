@@ -9,6 +9,7 @@ import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
 import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 
 /**
@@ -23,7 +24,8 @@ public class TestContainerLifecycleListener extends RunListener {
         payara = new FixedPortContainer<>(DockerImageName.parse(
                 System.getProperty("imageName", "payara/server-full")))
                 .withFixedExposedPort(4848, 4848)
-                .withFixedExposedPort(8080, 8080);
+                .withFixedExposedPort(8080, 8080)
+                .waitingFor(Wait.forLogMessage(".*Payara Server.*startup time.*\\n", 1));
         payara.start();
     }
 
