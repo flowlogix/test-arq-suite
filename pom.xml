@@ -13,10 +13,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>11</jdk.version>
+        <jakartaee.version>10.0.0</jakartaee.version>
         <maven.compiler.release>${jdk.version}</maven.compiler.release>
         <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
         <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
-        <payara.version>6.2023.2</payara.version>
+        <payara.version>6.2023.6</payara.version>
         <slf4j.version>2.0.7</slf4j.version>
         <arquillian.version>1.7.0.Final</arquillian.version>
         <payara.connection.type>payara-docker</payara.connection.type>
@@ -31,20 +32,8 @@
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>10.0.0</version>
-            <type>pom</type>
-            <exclusions>
-                <exclusion>
-                    <groupId>jakarta.platform</groupId>
-                    <artifactId>jakarta.jakartaee-web-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-web-api</artifactId>
-            <version>10.0.0</version>
-            <type>pom</type>
+            <version>${jakartaee.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- TestNG Basic deps -->
@@ -143,7 +132,7 @@
                         <configuration>
                             <rules>
                                 <requireMavenVersion>
-                                    <version>3.6</version>
+                                    <version>3.8</version>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
