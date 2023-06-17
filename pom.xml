@@ -20,7 +20,7 @@
         <payara.version>6.2023.6</payara.version>
         <slf4j.version>2.0.7</slf4j.version>
         <arquillian.version>1.7.0.Final</arquillian.version>
-        <payara.connection.type>payara-docker</payara.connection.type>
+        <payara.connection.type>payara</payara.connection.type>
         <payara.already.started>true</payara.already.started>
         <adminHost>localhost</adminHost>
         <adminPort>4848</adminPort>
@@ -89,12 +89,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Test Containers (to test against Payara via Docker) -->
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -263,21 +257,12 @@
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>3.1.2</version>
                     <configuration>
-                        <properties>
-                            <property>
-                                <name>listener</name>
-                                <value>com.flowlogix.testcontainers.TestContainerLifecycleListener</value>
-                            </property>
-                        </properties>
                         <includes>**/*Test.java</includes>
                         <!-- make sure last test is when number of deployments is checked -->
                         <runOrder>alphabetical</runOrder>
                         <systemPropertyVariables>
                             <arquillian.xml>${test-arq-suite.basedir}/arquillian.xml</arquillian.xml>
                             <arquillian.launch>${payara.connection.type}</arquillian.launch>
-                            <adminHost>${adminHost}</adminHost>
-                            <adminPort>${adminPort}</adminPort>
-                            <imageName>${imageName}</imageName>
                         </systemPropertyVariables>
                         <excludedGroups>${excluded.groups}</excludedGroups>
                     </configuration>
@@ -338,15 +323,6 @@
                 <version>3.1.6</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-
-            <!-- TestContainers -->
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-bom</artifactId>
-                <version>1.18.3</version>
-                <scope>import</scope>
-                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
