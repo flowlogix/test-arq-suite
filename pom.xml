@@ -43,6 +43,7 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
+        <!-- Workaround for https://issues.apache.org/jira/browse/MNG-7818 -->
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
