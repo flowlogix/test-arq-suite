@@ -43,17 +43,10 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
-        <!-- Workaround for https://issues.apache.org/jira/browse/MNG-7818 -->
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>5.9.3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-core</artifactId>
-            <version>2.2</version>
             <scope>test</scope>
         </dependency>
 
