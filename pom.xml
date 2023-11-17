@@ -301,7 +301,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.1.1</version>
                     <configuration>
                         <executable>${test-arq-suite.basedir}/target/dependency/payara6/bin/asadmin</executable>
                         <skip>${payara.already.started}</skip>
