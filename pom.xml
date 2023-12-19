@@ -242,7 +242,7 @@
                 <!-- Up-to-date compiler plugin -->
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.11.0</version>
+                    <version>3.12.0</version>
                     <configuration>
                         <proc>full</proc>
                     </configuration>
