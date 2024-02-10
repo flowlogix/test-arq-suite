@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.flowlogix.testcontainers;
 
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -16,17 +11,19 @@ import org.testcontainers.utility.DockerImageName;
  * @author lprimak
  */
 public class TestContainerLifecycleExtension implements BeforeAllCallback, ExtensionContext.Store.CloseableResource {
-    private  static GenericContainer<?> payara;
+    private static GenericContainer<?> payara;
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
         if (payara == null) {
-            payara = new FixedPortContainer<>(DockerImageName.parse(
+            payara = new GenericContainer<>(DockerImageName.parse(
                     System.getProperty("imageName", "payara/server-full")))
-                    .withFixedExposedPort(4848, 4848)
-                    .withFixedExposedPort(8080, 8080)
+                    .withExposedPorts(4848, 8080, 8181)
                     .waitingFor(Wait.forLogMessage(".*Payara Server.*startup time.*\\n", 1));
             payara.start();
+            System.setProperty("adminPort", Integer.toString(payara.getMappedPort(4848)));
+            System.setProperty("httpPort", Integer.toString(payara.getMappedPort(8080)));
+            System.setProperty("httpsPort", Integer.toString(payara.getMappedPort(8181)));
             context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put("TestContaiersContext", this);
         }
     }
