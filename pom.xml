@@ -14,13 +14,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>11</maven.compiler.release>
         <jakartaee.version>10.0.0</jakartaee.version>
-        <payara.version>6.2023.9</payara.version>
+        <payara.version>6.2024.1</payara.version>
         <slf4j.version>2.0.12</slf4j.version>
         <arquillian.version>1.8.0.Final</arquillian.version>
+        <arquillian.payara.version>3.0.alpha8</arquillian.payara.version>
         <payara.connection.type>payara-docker</payara.connection.type>
         <payara.already.started>true</payara.already.started>
         <adminHost>localhost</adminHost>
         <adminPort>4848</adminPort>
+        <httpPort>8080</httpPort>
+        <httpsPort>8181</httpsPort>
         <imageName>payara/server-full</imageName>
     </properties>
 
@@ -71,7 +74,7 @@
         <dependency>
             <groupId>fish.payara.arquillian</groupId>
             <artifactId>arquillian-payara-server-remote</artifactId>
-            <version>3.0.alpha8</version>
+            <version>${arquillian.payara.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -110,6 +113,15 @@
                 <payara.connection.type>payara</payara.connection.type>
                 <payara.already.started>${skipITs}</payara.already.started>
                 <excluded.groups>TestContainers</excluded.groups>
+            </properties>
+        </profile>
+        <profile>
+            <id>payara-k8s</id>
+            <properties>
+                <payara.already.started>true</payara.already.started>
+                <excluded.groups>TestContainers</excluded.groups>
+                <httpPort>80</httpPort>
+                <httpsPort>443</httpsPort>
             </properties>
         </profile>
     </profiles>
@@ -242,6 +254,8 @@
                             <arquillian.launch>${payara.connection.type}</arquillian.launch>
                             <adminHost>${adminHost}</adminHost>
                             <adminPort>${adminPort}</adminPort>
+                            <httpPort>${httpPort}</httpPort>
+                            <httpsPort>${httpsPort}</httpsPort>
                             <imageName>${imageName}</imageName>
                         </systemPropertyVariables>
                         <excludedGroups>${excluded.groups}</excludedGroups>
