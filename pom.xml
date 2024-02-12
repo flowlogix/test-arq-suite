@@ -19,12 +19,11 @@
         <arquillian.version>1.8.0.Final</arquillian.version>
         <arquillian.payara.version>3.0.alpha8</arquillian.payara.version>
         <payara.connection.type>payara</payara.connection.type>
-        <payara.already.started>true</payara.already.started>
+        <payara.already.started>false</payara.already.started>
         <adminHost>localhost</adminHost>
         <adminPort>4848</adminPort>
         <httpPort>8080</httpPort>
         <httpsPort>8181</httpsPort>
-        <imageName>payara/server-full</imageName>
     </properties>
 
     <dependencies>
@@ -137,10 +136,20 @@
             <id>payara-k8s</id>
             <properties>
                 <payara.already.started>true</payara.already.started>
-                <excluded.groups>TestContainers</excluded.groups>
+                <payara.connection.type>payara-docker</payara.connection.type>
                 <httpPort>80</httpPort>
                 <httpsPort>443</httpsPort>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <properties combine.self="override"/>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
@@ -274,9 +283,7 @@
                             <adminPort>${adminPort}</adminPort>
                             <httpPort>${httpPort}</httpPort>
                             <httpsPort>${httpsPort}</httpsPort>
-                            <imageName>${imageName}</imageName>
                         </systemPropertyVariables>
-                        <excludedGroups>${excluded.groups}</excludedGroups>
                     </configuration>
                     <executions>
                         <execution>
