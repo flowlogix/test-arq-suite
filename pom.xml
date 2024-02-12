@@ -137,10 +137,19 @@
             <id>payara-k8s</id>
             <properties>
                 <payara.already.started>true</payara.already.started>
-                <excluded.groups>TestContainers</excluded.groups>
                 <httpPort>80</httpPort>
                 <httpsPort>443</httpsPort>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <properties combine.self="override"/>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
@@ -282,7 +291,6 @@
                             <httpsPort>${httpsPort}</httpsPort>
                             <imageName>${imageName}</imageName>
                         </systemPropertyVariables>
-                        <excludedGroups>${excluded.groups}</excludedGroups>
                     </configuration>
                     <executions>
                         <execution>
