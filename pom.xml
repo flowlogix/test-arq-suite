@@ -12,25 +12,21 @@
 
     <parent>
         <groupId>com.flowlogix</groupId>
-        <artifactId>base-pom</artifactId>
-        <version>1</version>
+        <artifactId>payara-pom</artifactId>
+        <version>2</version>
     </parent>
 
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
-        <jakartaee.version>10.0.0</jakartaee.version>
-        <payara.version>6.2024.1</payara.version>
         <junit.version>5.10.2</junit.version>
         <slf4j.version>2.0.12</slf4j.version>
-        <arquillian.version>1.8.0.Final</arquillian.version>
-        <arquillian.payara.version>3.0.alpha8</arquillian.payara.version>
-        <payara.connection.type>payara-docker</payara.connection.type>
-        <payara.already.started>true</payara.already.started>
-        <adminHost>localhost</adminHost>
-        <adminPort>4848</adminPort>
-        <httpPort>8080</httpPort>
-        <httpsPort>8181</httpsPort>
+        <payara.start.disable>true</payara.start.disable>
+        <arquillian.launch>payara-docker</arquillian.launch>
         <imageName>payara/server-full</imageName>
+        <checkstyle.supressionsLocation>${basedir}/checkstyle/suppressions.xml</checkstyle.supressionsLocation>
+        <!-- make sure last test is when number of deployments is checked -->
+        <test.run.order>alphabetical</test.run.order>
+        <test.redirect.to.file>false</test.redirect.to.file>
     </properties>
 
     <dependencies>
@@ -38,7 +34,7 @@
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>${jakartaee.version}</version>
+            <version>${jakarta.ee.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -114,189 +110,45 @@
         <profile>
             <id>payara-server-remote</id>
             <properties>
-                <payara.connection.type>payara</payara.connection.type>
-                <payara.already.started>true</payara.already.started>
+                <arquillian.launch>payara</arquillian.launch>
                 <excluded.groups>TestContainers</excluded.groups>
             </properties>
         </profile>
         <profile>
             <id>payara-server-managed</id>
             <properties>
-                <payara.connection.type>payara</payara.connection.type>
-                <payara.already.started>${skipITs}</payara.already.started>
+                <arquillian.launch>payara</arquillian.launch>
+                <payara.start.disable>${skipITs}</payara.start.disable>
                 <excluded.groups>TestContainers</excluded.groups>
             </properties>
         </profile>
         <profile>
             <id>payara-k8s</id>
             <properties>
-                <payara.already.started>true</payara.already.started>
                 <excluded.groups>TestContainers</excluded.groups>
-                <httpPort>80</httpPort>
-                <httpsPort>443</httpsPort>
             </properties>
         </profile>
     </profiles>
 
     <build>
-        <plugins>
-            <!-- Make sure latest Maven is used -->
-            <plugin>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>enforce-maven</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireMavenVersion>
-                                    <version>3.8</version>
-                                </requireMavenVersion>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.commonjava.maven.plugins</groupId>
-                <artifactId>directory-maven-plugin</artifactId>
-                <version>1.0</version>
-                <executions>
-                    <execution>
-                        <id>directories</id>
-                        <goals>
-                            <goal>directory-of</goal>
-                        </goals>
-                        <phase>validate</phase>
-                        <configuration>
-                            <property>test-arq-suite.basedir</property>
-                            <project>
-                                <groupId>${project.groupId}</groupId>
-                                <artifactId>test-arq-suite</artifactId>
-                            </project>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack-payara</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <overWriteIfNewer>false</overWriteIfNewer>
-                    <outputDirectory>${test-arq-suite.basedir}/target/dependency</outputDirectory>
-                    <markersDirectory>${test-arq-suite.basedir}/target/dependency-maven-plugin-markers</markersDirectory>
-                    <artifactItems>
-                        <artifactItem>
-                            <groupId>fish.payara.distributions</groupId>
-                            <artifactId>payara</artifactId>
-                            <version>${payara.version}</version>
-                            <type>zip</type>
-                        </artifactItem>
-                    </artifactItems>
-                    <skip>${payara.already.started}</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>start-domain</id>
-                        <phase>pre-integration-test</phase>
-                        <configuration>
-                            <arguments>
-                                <argument>start-domain</argument>
-                            </arguments>
-                        </configuration>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>stop-domain</id>
-                        <phase>post-integration-test</phase>
-                        <configuration>
-                            <arguments>
-                                <argument>stop-domain</argument>
-                            </arguments>
-                        </configuration>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-
         <pluginManagement>
             <plugins>
-                <!-- Up-to-date compiler plugin -->
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <proc>full</proc>
-                    </configuration>
-                </plugin>
-                <!-- Up-to-date failsafe plugin -->
                 <plugin>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <configuration>
                         <includes>**/*Test.java</includes>
-                        <!-- make sure last test is when number of deployments is checked -->
-                        <runOrder>alphabetical</runOrder>
                         <systemPropertyVariables>
-                            <arquillian.xml>${test-arq-suite.basedir}/arquillian.xml</arquillian.xml>
-                            <arquillian.launch>${payara.connection.type}</arquillian.launch>
-                            <adminHost>${adminHost}</adminHost>
-                            <adminPort>${adminPort}</adminPort>
-                            <httpPort>${httpPort}</httpPort>
-                            <httpsPort>${httpsPort}</httpsPort>
+                            <arquillian.xml>${basedir}/arquillian.xml</arquillian.xml>
+                            <arquillian.launch>${arquillian.launch}</arquillian.launch>
                             <imageName>${imageName}</imageName>
                         </systemPropertyVariables>
                         <excludedGroups>${excluded.groups}</excludedGroups>
                     </configuration>
-                    <executions>
-                        <execution>
-                            <id>integration-test</id>
-                            <goals>
-                                <goal>integration-test</goal>
-                                <goal>verify</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <configuration>
                         <skip>true</skip>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <configuration>
-                        <skipIfEmpty>true</skipIfEmpty>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>exec-maven-plugin</artifactId>
-                    <version>3.1.1</version>
-                    <configuration>
-                        <executable>${test-arq-suite.basedir}/target/dependency/payara6/bin/asadmin</executable>
-                        <skip>${payara.already.started}</skip>
                     </configuration>
                 </plugin>
             </plugins>
