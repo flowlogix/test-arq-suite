@@ -37,6 +37,7 @@ public class TestContainerLifecycleListener extends RunListener {
                 .withExposedPorts(4848, 8080, 8181)
                 .waitingFor(Wait.forLogMessage(".*Payara Server.*startup time.*\\n", 1));
         payara.start();
+        System.setProperty("adminHost", payara.getHost());
         System.setProperty("adminPort", Integer.toString(payara.getMappedPort(4848)));
         System.setProperty("httpPort", Integer.toString(payara.getMappedPort(8080)));
         System.setProperty("httpsPort", Integer.toString(payara.getMappedPort(8181)));
