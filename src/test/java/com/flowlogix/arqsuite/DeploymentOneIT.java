@@ -15,22 +15,26 @@
  */
 package com.flowlogix.arqsuite;
 
-import org.junit.jupiter.api.AfterAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.flowlogix.testcontainers.TestContainerLifecycleExtension;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
  *
  * @author lprimak
  */
-class NumberOfDeploymentsTest {
-    @AfterAll
-    static void checkDeployments() {
-        assertEquals(1, Deployments.numOfDeployments, "Should only be one deployment");
+@ExtendWith(TestContainerLifecycleExtension.class)
+@ExtendWith(ArquillianExtension.class)
+@ExtendWith(DeploymentCheckerExtension.class)
+class DeploymentOneIT {
+    @Test
+    void one() {
+
     }
 
     @Test
-    void dummy() {
+    void two() {
 
     }
 }

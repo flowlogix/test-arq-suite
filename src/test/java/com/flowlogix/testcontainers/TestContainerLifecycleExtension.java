@@ -31,17 +31,18 @@ public class TestContainerLifecycleExtension implements BeforeAllCallback, Exten
     @Override
     @SuppressWarnings("checkstyle:MagicNumber")
     public void beforeAll(ExtensionContext context) throws Exception {
-        if (payara == null) {
+        if (payara == null && !Boolean.getBoolean("testcontainers.skip")) {
             payara = new GenericContainer<>(DockerImageName.parse(
                     System.getProperty("imageName", "payara/server-full")))
-                    .withExposedPorts(4848, 8080, 8181)
+                    .withExposedPorts(4848, 8080, 8181, 9009)
                     .waitingFor(Wait.forLogMessage(".*Payara Server.*startup time.*\\n", 1));
             payara.start();
+            System.out.println(String.format("# Payara debugger location: %s:%d", payara.getHost(), payara.getMappedPort(9009)));
             System.setProperty("adminHost", payara.getHost());
             System.setProperty("adminPort", Integer.toString(payara.getMappedPort(4848)));
             System.setProperty("httpPort", Integer.toString(payara.getMappedPort(8080)));
             System.setProperty("httpsPort", Integer.toString(payara.getMappedPort(8181)));
-            context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put("TestContaiersContext", this);
+            context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put(this.getClass().getName(), this);
         }
     }
 

@@ -15,23 +15,18 @@
  */
 package com.flowlogix.arqsuite;
 
-import org.jboss.arquillian.junit5.ArquillianExtension;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- *
- * @author lprimak
- */
-@ExtendWith(ArquillianExtension.class)
-class DeploymentOneTest {
-    @Test
-    void one() {
-
+public class DeploymentCheckerExtension implements BeforeAllCallback, ExtensionContext.Store.CloseableResource {
+    @Override
+    public void beforeAll(ExtensionContext extensionContext) throws Exception {
+        extensionContext.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put(this.getClass().getName(), this);
     }
 
-    @Test
-    void two() {
-
+    @Override
+    public void close() throws Throwable {
+        assertEquals(1, Deployments.numOfDeployments, "Should only be one deployment");
     }
 }
