@@ -13,16 +13,14 @@
     <parent>
         <groupId>com.flowlogix</groupId>
         <artifactId>payara-pom</artifactId>
-        <version>14</version>
+        <version>15</version>
     </parent>
 
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <payara.start.disable>true</payara.start.disable>
         <arquillian.launch>payara-docker</arquillian.launch>
-        <imageName>payara/server-full</imageName>
         <checkstyle.supressionsLocation>${basedir}/checkstyle/suppressions.xml</checkstyle.supressionsLocation>
-        <!-- make sure last test is when number of deployments is checked -->
         <test.redirect.to.file>false</test.redirect.to.file>
         <arquillian.payara.version>3.0.alpha8</arquillian.payara.version>
     </properties>
@@ -38,8 +36,7 @@
         <dependency>
             <groupId>com.flowlogix.depchain</groupId>
             <artifactId>integration-test</artifactId>
-            <version>1</version>
-            <type>pom</type>
+            <version>2</version>
             <scope>test</scope>
         </dependency>
 
@@ -61,15 +58,6 @@
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <configuration>
-                    <systemPropertyVariables>
-                        <imageName>${imageName}</imageName>
-                        <testcontainers.skip>${testcontainers.skip}</testcontainers.skip>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
-            <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <executions>
                     <execution>
@@ -83,23 +71,10 @@
 
     <profiles>
         <profile>
-            <id>payara-server-remote</id>
-            <properties>
-                <arquillian.launch>payara</arquillian.launch>
-                <testcontainers.skip>true</testcontainers.skip>
-            </properties>
-        </profile>
-        <profile>
             <id>payara-server-managed</id>
             <properties>
                 <arquillian.launch>payara</arquillian.launch>
                 <payara.start.disable>${skipITs}</payara.start.disable>
-                <testcontainers.skip>true</testcontainers.skip>
-            </properties>
-        </profile>
-        <profile>
-            <id>payara-k8s</id>
-            <properties>
                 <testcontainers.skip>true</testcontainers.skip>
             </properties>
         </profile>

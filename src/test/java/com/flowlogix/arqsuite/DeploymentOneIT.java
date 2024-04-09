@@ -15,7 +15,7 @@
  */
 package com.flowlogix.arqsuite;
 
-import com.flowlogix.testcontainers.TestContainerLifecycleExtension;
+import com.flowlogix.testcontainers.PayaraServerLifecycleExtension;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  *
  * @author lprimak
  */
-@ExtendWith(TestContainerLifecycleExtension.class)
+@ExtendWith(PayaraServerLifecycleExtension.class)
 @ExtendWith(ArquillianExtension.class)
 @ExtendWith(DeploymentCheckerExtension.class)
 class DeploymentOneIT {
