@@ -35,7 +35,6 @@ public class Deployments {
 
     @Deployment
     public static WebArchive deploy() {
-
         ++numOfDeployments;
         WebArchive archive = ShrinkWrap.create(WebArchive.class)
                 .addPackage(Deployments.class.getPackage())

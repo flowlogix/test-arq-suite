@@ -15,26 +15,21 @@
  */
 package com.flowlogix.arqsuite;
 
-import jakarta.annotation.Resource;
-import javax.sql.DataSource;
 import org.jboss.arquillian.testng.Arquillian;
-import static org.testng.Assert.assertNotNull;
 import org.testng.annotations.Test;
 
 /**
  *
  * @author lprimak
  */
-class DeploymentOneIT extends Arquillian {
-    @Resource
-    DataSource ds;
-
+class DeploymentTwoIT extends Arquillian {
     @Test
     void one() {
-        assertNotNull(ds, "resource is null");
+
     }
 
     @Test
     void two() {
+
     }
 }

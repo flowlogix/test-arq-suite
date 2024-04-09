@@ -37,7 +37,7 @@
         <dependency>
             <groupId>com.flowlogix.depchain</groupId>
             <artifactId>integration-test</artifactId>
-            <version>3-M1</version>
+            <version>3-M2</version>
             <scope>test</scope>
             <exclusions>
                 <exclusion>
@@ -60,10 +60,6 @@
                     <groupId>org.jboss.arquillian.junit5</groupId>
                     <artifactId>arquillian-junit5-container</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>io.quarkus</groupId>
-                    <artifactId>quarkus-junit4-mock</artifactId>
-                </exclusion>
             </exclusions>
         </dependency>
 
@@ -83,7 +79,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Payara Java EE Container support (container) -->
         <dependency>
             <groupId>fish.payara.arquillian</groupId>
             <artifactId>arquillian-payara-server-remote</artifactId>

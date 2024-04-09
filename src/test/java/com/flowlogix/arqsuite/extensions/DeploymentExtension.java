@@ -25,7 +25,7 @@ import static org.testng.Assert.assertEquals;
  *
  * @author lprimak
  */
-public class NumberOfDeployments implements ISuiteListener {
+public class DeploymentExtension implements ISuiteListener {
     private final PayaraServerTestContainer payara = new PayaraServerTestContainer();
 
     @Override
@@ -36,6 +36,6 @@ public class NumberOfDeployments implements ISuiteListener {
     @Override
     public void onFinish(ISuite suite) {
         payara.stop();
-        assertEquals(1, Deployments.numOfDeployments, "Should only be one deployment");
+        assertEquals(Deployments.numOfDeployments, 1, "Should only be one deployment");
     }
 }
