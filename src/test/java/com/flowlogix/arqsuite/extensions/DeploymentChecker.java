@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.flowlogix.arqsuite;
+package com.flowlogix.arqsuite.extensions;
 
+import com.flowlogix.arqsuite.Deployments;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DeploymentCheckerExtension implements BeforeAllCallback, ExtensionContext.Store.CloseableResource {
+public class DeploymentChecker implements BeforeAllCallback, ExtensionContext.Store.CloseableResource {
     @Override
     public void beforeAll(ExtensionContext extensionContext) throws Exception {
         extensionContext.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put(this.getClass().getName(), this);
