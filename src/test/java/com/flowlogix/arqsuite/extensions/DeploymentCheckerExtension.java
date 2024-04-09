@@ -13,22 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.flowlogix.arqsuite;
+package com.flowlogix.arqsuite.extensions;
 
-import org.jboss.arquillian.testng.Arquillian;
-import org.testng.annotations.Test;
+import com.flowlogix.arqsuite.Deployments;
+import com.flowlogix.testcontainers.PayaraServerTestContainer;
+import org.testng.ISuite;
+import org.testng.ISuiteListener;
+import static org.testng.Assert.assertEquals;
 
 /**
  *
  * @author lprimak
  */
-class DeploymentTwoTest extends Arquillian {
-    @Test
-    void one() {
+public class NumberOfDeployments implements ISuiteListener {
+    private final PayaraServerTestContainer payara = new PayaraServerTestContainer();
 
+    @Override
+    public void onStart(ISuite suite) {
+        payara.start();
     }
 
-    @Test
-    void two() {
+    @Override
+    public void onFinish(ISuite suite) {
+        payara.stop();
+        assertEquals(1, Deployments.numOfDeployments, "Should only be one deployment");
     }
 }

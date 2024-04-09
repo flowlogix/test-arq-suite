@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
  *
  * @author lprimak
  */
-class DeploymentOneTest extends Arquillian {
+class DeploymentOneIT extends Arquillian {
     @Resource
     DataSource ds;
 
@@ -36,6 +36,5 @@ class DeploymentOneTest extends Arquillian {
 
     @Test
     void two() {
-
     }
 }

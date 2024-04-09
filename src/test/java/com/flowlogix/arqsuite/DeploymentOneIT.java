@@ -15,22 +15,21 @@
  */
 package com.flowlogix.arqsuite;
 
-import static org.testng.Assert.assertEquals;
-import org.testng.annotations.AfterClass;
+import org.jboss.arquillian.testng.Arquillian;
 import org.testng.annotations.Test;
 
 /**
  *
  * @author lprimak
  */
-class NumberOfDeploymentsTest {
-    @AfterClass
-    void checkDeployments() {
-        assertEquals(1, Deployments.numOfDeployments, "Should only be one deployment");
+class DeploymentTwoIT extends Arquillian {
+    @Test
+    void one() {
+
     }
 
     @Test
-    void dummy() {
+    void two() {
 
     }
 }
