@@ -71,6 +71,14 @@
 
     <profiles>
         <profile>
+            <id>payara-server-remote</id>
+            <properties>
+                <arquillian.launch>payara</arquillian.launch>
+                <payara.start.skip>true</payara.start.skip>
+                <testcontainers.skip>true</testcontainers.skip>
+            </properties>
+        </profile>
+        <profile>
             <id>payara-server-managed</id>
             <properties>
                 <arquillian.launch>payara</arquillian.launch>
