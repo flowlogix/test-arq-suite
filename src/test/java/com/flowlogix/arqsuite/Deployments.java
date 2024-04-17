@@ -15,6 +15,7 @@
  */
 package com.flowlogix.arqsuite;
 
+import com.flowlogix.testcontainers.PayaraServerLifecycleExtension;
 import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -33,6 +34,7 @@ public class Deployments {
     @Deployment
     public static WebArchive deploy() {
         ++numOfDeployments;
-        return ShrinkWrap.create(WebArchive.class).addPackage(Deployments.class.getPackage());
+        return ShrinkWrap.create(WebArchive.class).addPackage(Deployments.class.getPackage())
+                .addClass(PayaraServerLifecycleExtension.class);
     }
 }
