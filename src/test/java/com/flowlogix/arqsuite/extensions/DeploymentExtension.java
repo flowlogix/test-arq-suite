@@ -16,7 +16,6 @@
 package com.flowlogix.arqsuite.extensions;
 
 import com.flowlogix.arqsuite.Deployments;
-import com.flowlogix.testcontainers.PayaraServerTestContainer;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
 import static org.testng.Assert.assertEquals;
@@ -26,16 +25,8 @@ import static org.testng.Assert.assertEquals;
  * @author lprimak
  */
 public class DeploymentExtension implements ISuiteListener {
-    private final PayaraServerTestContainer payara = new PayaraServerTestContainer();
-
-    @Override
-    public void onStart(ISuite suite) {
-        payara.start();
-    }
-
     @Override
     public void onFinish(ISuite suite) {
-        payara.stop();
         assertEquals(Deployments.numOfDeployments, 1, "Should only be one deployment");
     }
 }
