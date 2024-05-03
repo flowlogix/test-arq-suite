@@ -23,7 +23,7 @@
         <checkstyle.supressionsLocation>${basedir}/checkstyle/suppressions.xml</checkstyle.supressionsLocation>
         <test.redirect.to.file>false</test.redirect.to.file>
         <test.parallel>none</test.parallel>
-        <arquillian.payara.version>3.0.alpha8</arquillian.payara.version>
+        <arquillian.payara.version>3.0</arquillian.payara.version>
     </properties>
 
     <dependencies>
