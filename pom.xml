@@ -74,8 +74,6 @@
             <id>payara-server-local</id>
             <properties>
                 <arquillian.launch>payara</arquillian.launch>
-                <payara.start.skip>true</payara.start.skip>
-                <testcontainers.skip>true</testcontainers.skip>
             </properties>
         </profile>
         <profile>
