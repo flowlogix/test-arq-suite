@@ -22,7 +22,7 @@
         <arquillian.launch>payara-docker</arquillian.launch>
         <checkstyle.supressionsLocation>${basedir}/checkstyle/suppressions.xml</checkstyle.supressionsLocation>
         <test.redirect.to.file>false</test.redirect.to.file>
-        <test.parallel>none</test.parallel>
+        <it.test.parallel>none</it.test.parallel>
         <arquillian.payara.version>3.0</arquillian.payara.version>
     </properties>
 
