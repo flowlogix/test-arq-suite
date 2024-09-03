@@ -15,12 +15,14 @@
  */
 package com.flowlogix.arqsuite.extensions;
 
-import com.flowlogix.arqsuite.Deployments;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DeploymentChecker implements BeforeAllCallback, ExtensionContext.Store.CloseableResource {
+    @SuppressWarnings({"checkstyle:VisibilityModifier", "checkstyle:JavadocVariable"})
+    public static int numOfDeployments;
+
     @Override
     public void beforeAll(ExtensionContext extensionContext) throws Exception {
         extensionContext.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put(this.getClass().getName(), this);
@@ -28,6 +30,6 @@ public class DeploymentChecker implements BeforeAllCallback, ExtensionContext.St
 
     @Override
     public void close() throws Throwable {
-        assertEquals(1, Deployments.numOfDeployments, "Should only be one deployment");
+        assertThat(numOfDeployments).withFailMessage("Should only be one deployment").isEqualTo(1);
     }
 }

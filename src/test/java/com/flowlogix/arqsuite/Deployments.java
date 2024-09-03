@@ -15,11 +15,11 @@
  */
 package com.flowlogix.arqsuite;
 
-import com.flowlogix.testcontainers.PayaraServerLifecycleExtension;
+import com.flowlogix.util.ShrinkWrapManipulator;
 import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import static com.flowlogix.arqsuite.extensions.DeploymentChecker.numOfDeployments;
 
 /**
  *
@@ -27,14 +27,10 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
  */
 @ArquillianSuiteDeployment
 @SuppressWarnings("checkstyle:HideUtilityClassConstructor")
-public class Deployments {
-    @SuppressWarnings({"checkstyle:VisibilityModifier", "checkstyle:JavadocVariable"})
-    public static int numOfDeployments;
-
+class Deployments {
     @Deployment
-    public static WebArchive deploy() {
+    static WebArchive deploy() {
         ++numOfDeployments;
-        return ShrinkWrap.create(WebArchive.class).addPackage(Deployments.class.getPackage())
-                .addClass(PayaraServerLifecycleExtension.class);
+        return ShrinkWrapManipulator.createDeployment(WebArchive.class).addPackages(true, Deployments.class.getPackage());
     }
 }
