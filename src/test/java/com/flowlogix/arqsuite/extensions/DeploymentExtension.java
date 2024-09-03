@@ -15,18 +15,20 @@
  */
 package com.flowlogix.arqsuite.extensions;
 
-import com.flowlogix.arqsuite.Deployments;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
-import static org.testng.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
  * @author lprimak
  */
 public class DeploymentExtension implements ISuiteListener {
+    @SuppressWarnings({"checkstyle:VisibilityModifier", "checkstyle:JavadocVariable"})
+    public static int numOfDeployments;
+
     @Override
     public void onFinish(ISuite suite) {
-        assertEquals(Deployments.numOfDeployments, 1, "Should only be one deployment");
+        assertThat(numOfDeployments).withFailMessage("Should only be one deployment").isEqualTo(1);
     }
 }

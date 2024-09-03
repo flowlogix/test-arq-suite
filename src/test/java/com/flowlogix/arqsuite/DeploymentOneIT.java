@@ -18,7 +18,7 @@ package com.flowlogix.arqsuite;
 import jakarta.annotation.Resource;
 import javax.sql.DataSource;
 import org.jboss.arquillian.testng.Arquillian;
-import static org.testng.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.testng.annotations.Test;
 
 /**
@@ -31,7 +31,7 @@ class DeploymentOneIT extends Arquillian {
 
     @Test
     void one() {
-        assertNotNull(ds, "resource is null");
+        assertThat(ds).withFailMessage("resource is null").isNotNull();
     }
 
     @Test
