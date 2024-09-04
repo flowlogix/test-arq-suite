@@ -31,6 +31,8 @@ class Deployments {
     @Deployment
     static WebArchive deploy() {
         ++numOfDeployments;
-        return ShrinkWrapManipulator.createDeployment(WebArchive.class).addPackage(Deployments.class.getPackage());
+        var archive = ShrinkWrapManipulator.createDeployment(WebArchive.class)
+                .addPackage(Deployments.class.getPackage());
+        return ShrinkWrapManipulator.packageSlf4j(archive);
     }
 }
