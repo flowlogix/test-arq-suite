@@ -15,7 +15,9 @@
  */
 package com.flowlogix.arqsuite;
 
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.annotations.Test;
 
 /**
@@ -31,5 +33,10 @@ class DeploymentTwoIT extends Arquillian {
     @Test
     void two() {
 
+    }
+
+    @Deployment
+    static WebArchive deploy() {
+        return Deployments.deploy();
     }
 }
