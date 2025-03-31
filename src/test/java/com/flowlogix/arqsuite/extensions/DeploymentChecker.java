@@ -30,6 +30,7 @@ public class DeploymentChecker implements BeforeAllCallback, ExtensionContext.St
 
     @Override
     public void close() throws Throwable {
-        assertThat(numOfDeployments).withFailMessage("Should only be one deployment").isEqualTo(1);
+        // is zero if running in container, which we can safely ignore here
+        assertThat(numOfDeployments).withFailMessage("Should only be one deployment").isIn(0, 1);
     }
 }

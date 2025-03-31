@@ -17,7 +17,9 @@ package com.flowlogix.arqsuite;
 
 import com.flowlogix.arqsuite.extensions.DeploymentChecker;
 import com.flowlogix.testcontainers.PayaraServerLifecycleExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -37,5 +39,10 @@ class DeploymentOneIT {
     @Test
     void two() {
 
+    }
+
+    @Deployment
+    static WebArchive deploy() {
+        return Deployments.deploy();
     }
 }
