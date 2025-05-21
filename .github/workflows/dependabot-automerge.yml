@@ -11,6 +11,8 @@ jobs:
     if: |
       github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Wait for external checks (Jenkins/Snyk)
         run: sleep 30
