@@ -39,7 +39,6 @@ jobs:
             let tries = 0, maxTries = 40;
             while (tries < maxTries) {
               const checks = await github.rest.checks.listForRef({ owner, repo, ref });
-              console.log(JSON.stringify(checks.data.check_runs, null, 2));
               const pending = checks.data.check_runs.filter(
                 c => c.name !== currentWorkflow && c.status === 'completed')
               );
