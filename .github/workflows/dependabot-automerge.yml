@@ -45,11 +45,11 @@ jobs:
               const failedChecks = checks.data.check_runs.filter(
                 c => c.status === 'completed' && c.conclusion !== 'success'
               );
-              if (pendingChecks.length === 0) break;
               if (failedChecks.length > 0) {
                 core.setFailed('Some checks are failing');
                 return;
               }
+              if (pendingChecks.length === 0) break;
               core.info(`Waiting for checks: ${pendingChecks.map(c => c.name).join(', ')}`);
               await new Promise(r => setTimeout(r, 15000));
               tries++;
