@@ -41,7 +41,8 @@ jobs:
               const checks = await github.rest.checks.listForRef({ owner, repo, ref });
               console.log(JSON.stringify(checks.data.check_runs, null, 2));
               const pending = checks.data.check_runs.filter(
-                c => c.name !== currentWorkflow && c.status !== 'success'
+                c => c.name !== currentWorkflow && 
+                !(c.status === 'completed' && c.conclusion === 'success')
               );
               if (pending.length === 0) break;
               core.info(`Waiting for checks: ${pending.map(c => c.name).join(', ')}`);
