@@ -36,26 +36,11 @@ jobs:
             const ref = pr.head.sha;
             const currentWorkflow = 'automerge';
 
-            // Get required status checks for the branch
-            const requiredChecks = [];
-            try {
-              const branchProtection = await github.rest.repos.getBranchProtection({
-                owner, repo, branch: pr.base.ref,
-              });
-              requiredChecks = branchProtection.data.required_status_checks?.contexts || [];
-            } catch (error) {
-              if (error.status !== 404) {
-                core.setFailed(`Error fetching branch protection rules: ${error.message}`);
-                return;
-              }
-            }
-
             let tries = 0, maxTries = 40;
             while (tries < maxTries) {
               const checks = await github.rest.checks.listForRef({ owner, repo, ref });
               const pending = checks.data.check_runs.filter(
-                c => requiredChecks.includes(c.name) &&
-                c.name !== currentWorkflow && c.status !== 'success'
+                c => c.name !== currentWorkflow && c.status !== 'success'
               );
               if (pending.length === 0) break;
               core.info(`Waiting for checks: ${pending.map(c => c.name).join(', ')}`);
@@ -66,7 +51,7 @@ jobs:
               core.setFailed('Timeout waiting for running checks');
             } else {
               core.info('All checks are done, merging');
-              if (pr.data.login.startsWith('dependabot')) {
+              if (pr.user.login.startsWith('dependabot')) {
                 await github.rest.pulls.merge({
                   owner,
                   repo,
