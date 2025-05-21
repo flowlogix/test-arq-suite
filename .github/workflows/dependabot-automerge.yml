@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      contents: write
     steps:
 #      - name: Wait for external checks (Jenkins/Snyk)
 #        run: sleep 30
