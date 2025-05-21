@@ -1,0 +1,46 @@
+name: "Dependabot Auto Approve and Merge"
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - TestNG
+
+jobs:
+  automerge:
+    if: |
+      github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for external checks (Jenkins/Snyk)
+        run: sleep 30
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Approve PR
+        uses: hmarr/auto-approve-action@v4
+        with:
+          github-token: ${{ secrets.GH_AUTOMERGE_TOKEN }}
+
+      - name: Enable auto-merge for Dependabot PRs
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GH_AUTOMERGE_TOKEN }}
+          pull-request-number: ${{ github.event.pull_request.number }}
+          merge-method: squash
+
+      - name: Merge PR
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GH_AUTOMERGE_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            if (pr.mergeable_state === 'clean' && pr.user.login.startsWith('dependabot')) {
+              await github.rest.pulls.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                merge_method: 'squash',
+              });
+            }
