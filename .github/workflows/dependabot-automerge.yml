@@ -1,0 +1,64 @@
+name: "Dependabot Auto Approve and Merge"
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - TestNG
+
+jobs:
+  automerge:
+    if: |
+      github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - name: Wait for external checks (Jenkins/Snyk)
+        run: sleep 30
+
+      - name: Checkout repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Approve PR
+        uses: hmarr/auto-approve-action@f0939ea97e9205ef24d872e76833fa908a770363 # v4.0.0
+        with:
+          github-token: ${{ secrets.GH_AUTOMERGE_TOKEN }}
+
+      - name: Enable auto-merge for Dependabot PRs
+        uses: peter-evans/enable-pull-request-automerge@a660677d5469627102a1c1e11409dd063606628d #v3.0.0
+        with:
+          token: ${{ secrets.GH_AUTOMERGE_TOKEN }}
+          pull-request-number: ${{ github.event.pull_request.number }}
+          merge-method: squash
+
+      - name: Merge PR
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          github-token: ${{ secrets.GH_AUTOMERGE_TOKEN }}
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            let pr, state, tries = 0, maxTries = 20;
+            do {
+              pr = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
+              state = pr.data.mergeable_state;
+              if (state !== 'clean') {
+                core.info(`mergeable_state is '${state}', waiting...`);
+                await new Promise(r => setTimeout(r, 15000));
+              }
+              tries++;
+            } while (state !== 'clean' && tries < maxTries);
+
+            if (state === 'clean' && pr.data.user.login.startsWith('dependabot')) {
+              await github.rest.pulls.merge({
+                owner,
+                repo,
+                pull_number: prNumber,
+                merge_method: 'squash',
+              });
+            } else {
+              core.setFailed(`PR not in a clean mergeable state after waiting. Final state: ${state}`);
+            }
