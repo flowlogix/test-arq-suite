@@ -34,7 +34,7 @@ jobs:
             const pr = context.payload.pull_request;
             const { owner, repo } = context.repo;
             const ref = pr.head.sha;
-            const currentWorkflow = process.env.GITHUB_WORKFLOW;
+            const currentWorkflow = 'automerge';
 
             let tries = 0, maxTries = 40;
             while (tries < maxTries) {
