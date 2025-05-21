@@ -39,18 +39,18 @@ jobs:
             let tries = 0, maxTries = 40;
             while (tries < maxTries) {
               const checks = await github.rest.checks.listForRef({ owner, repo, ref });
-              const pending = checks.data.check_runs.filter(
-                c => c.name !== currentWorkflow && c.status === 'completed')
+              const pendingChecks = checks.data.check_runs.filter(
+                c => c.name !== currentWorkflow && c.status === 'completed'
               );
               const failedChecks = checks.data.check_runs.filter(
                 c => c.status === 'completed' && c.conclusion !== 'success'
               );
-              if (pending.length === 0) break;
+              if (pendingChecks.length === 0) break;
               if (failedChecks.length > 0) {
                 core.setFailed('Some checks are failing');
                 return;
               }
-              core.info(`Waiting for checks: ${pending.map(c => c.name).join(', ')}`);
+              core.info(`Waiting for checks: ${pendingChecks.map(c => c.name).join(', ')}`);
               await new Promise(r => setTimeout(r, 15000));
               tries++;
             }
