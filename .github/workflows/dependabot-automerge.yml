@@ -31,27 +31,31 @@ jobs:
         with:
           github-token: ${{ secrets.GH_AUTOMERGE_TOKEN }}
           script: |
-            const prNumber = context.payload.pull_request.number;
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            let pr, state, tries = 0, maxTries = 20;
-            do {
-              pr = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
-              state = pr.data.mergeable_state;
-              if (state !== 'clean') {
-                core.info(`mergeable_state is '${state}', waiting...`);
-                await new Promise(r => setTimeout(r, 15000));
-              }
-              tries++;
-            } while (state !== 'clean' && tries < maxTries);
+            const pr = context.payload.pull_request;
+            const { owner, repo } = context.repo;
+            const ref = pr.head.sha;
+            const currentWorkflow = process.env.GITHUB_WORKFLOW;
 
-            if (state === 'clean' && pr.data.user.login.startsWith('dependabot')) {
-              await github.rest.pulls.merge({
-                owner,
-                repo,
-                pull_number: prNumber,
-                merge_method: 'squash',
-              });
+            let tries = 0, maxTries = 40;
+            while (tries < maxTries) {
+              const checks = await github.rest.checks.listForRef({ owner, repo, ref });
+              const pending = checks.data.check_runs.filter(
+                c => c.name !== currentWorkflow && ['in_progress', 'queued'].includes(c.status)
+              );
+              if (pending.length === 0) break;
+              core.info(`Waiting for checks: ${pending.map(c => c.name).join(', ')}`);
+              await new Promise(r => setTimeout(r, 15000));
+              tries++;
+            }
+            if (tries === maxTries) {
+              core.setFailed('Timeout waiting for running checks');
             } else {
-              core.setFailed(`PR not in a clean mergeable state after waiting. Final state: ${state}`);
+              core.info('All checks are done, merging');
+              if (pr.data.user.login.startsWith('dependabot')) {
+                await github.rest.pulls.merge({
+                  owner,
+                  repo,
+                  pull_number: prNumber,
+                  merge_method: 'squash',
+                });
             }
