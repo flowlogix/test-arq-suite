@@ -42,9 +42,11 @@ jobs:
               const pending = checks.data.check_runs.filter(
                 c => c.name !== currentWorkflow && c.status === 'completed')
               );
-          
+              const failedChecks = checks.data.check_runs.filter(
+                c => c.status === 'completed' && c.conclusion !== 'success'
+              );
               if (pending.length === 0) break;
-              if (pending.some(c => c.conclusion !== 'success')) {
+              if (failedChecks.length > 0) {
                 core.setFailed('Some checks are failing');
                 return;
               }
