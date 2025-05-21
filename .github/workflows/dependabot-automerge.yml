@@ -45,7 +45,7 @@ jobs:
               const failedChecks = checks.data.check_runs.filter(
                 c => c.status === 'completed' && c.conclusion !== 'success'
               );
-              console.log(JSON.stringify(failedChecks, null, 2));
+              console.log(JSON.stringify(checks.data.check_runs, null, 2));
               if (failedChecks.length > 0) {
                 core.setFailed('Some checks are failing');
                 return;
