@@ -45,9 +45,8 @@ jobs:
           
               if (pending.length === 0) break;
               if (pending.some(c => c.conclusion !== 'success')) {
-                core.setfailed('Some checks are failing');
+                core.setFailed('Some checks are failing');
                 return;
-                tries++;
               }
               core.info(`Waiting for checks: ${pending.map(c => c.name).join(', ')}`);
               await new Promise(r => setTimeout(r, 15000));
