@@ -40,7 +40,7 @@ jobs:
             while (tries < maxTries) {
               const checks = await github.rest.checks.listForRef({ owner, repo, ref });
               const pending = checks.data.check_runs.filter(
-                c => c.name !== currentWorkflow && ['in_progress', 'queued'].includes(c.status)
+                c => c.name !== currentWorkflow && c.status != 'success'
               );
               if (pending.length === 0) break;
               core.info(`Waiting for checks: ${pending.map(c => c.name).join(', ')}`);
@@ -51,7 +51,7 @@ jobs:
               core.setFailed('Timeout waiting for running checks');
             } else {
               core.info('All checks are done, merging');
-              if (pr.data.user.login.startsWith('dependabot')) {
+              if (pr.data.login.startsWith('dependabot')) {
                 await github.rest.pulls.merge({
                   owner,
                   repo,
