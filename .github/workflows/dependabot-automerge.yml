@@ -36,11 +36,18 @@ jobs:
             const ref = pr.head.sha;
             const currentWorkflow = 'automerge';
 
+            // Get required status checks for the branch
+            const branchProtection = await github.rest.repos.getBranchProtection({
+              owner, repo, branch: pr.base.ref,
+            });
+            const requiredChecks = branchProtection.data.required_status_checks?.contexts || [];
+
             let tries = 0, maxTries = 40;
             while (tries < maxTries) {
               const checks = await github.rest.checks.listForRef({ owner, repo, ref });
               const pending = checks.data.check_runs.filter(
-                c => c.name !== currentWorkflow && c.status != 'success'
+                c => requiredChecks.includes(c.name) &&
+                c.name !== currentWorkflow && c.status !== 'success'
               );
               if (pending.length === 0) break;
               core.info(`Waiting for checks: ${pending.map(c => c.name).join(', ')}`);
