@@ -15,30 +15,29 @@
  */
 package com.flowlogix.arqsuite;
 
-import com.flowlogix.arqsuite.extensions.DeploymentChecker;
-import com.flowlogix.testcontainers.PayaraServerLifecycleExtension;
+import jakarta.annotation.Resource;
+import javax.sql.DataSource;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.testng.Arquillian;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.testng.annotations.Test;
 
 /**
  *
  * @author lprimak
  */
-@ExtendWith(PayaraServerLifecycleExtension.class)
-@ExtendWith(ArquillianExtension.class)
-@ExtendWith(DeploymentChecker.class)
-class DeploymentOneIT {
+class DeploymentOneIT extends Arquillian {
+    @Resource
+    DataSource ds;
+
     @Test
     void one() {
-
+        assertThat(ds).withFailMessage("resource is null").isNotNull();
     }
 
     @Test
     void two() {
-
     }
 
     @Deployment

@@ -15,22 +15,20 @@
  */
 package com.flowlogix.arqsuite.extensions;
 
-import org.junit.jupiter.api.extension.BeforeAllCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
+import org.testng.ISuite;
+import org.testng.ISuiteListener;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DeploymentChecker implements BeforeAllCallback, ExtensionContext.Store.CloseableResource {
+/**
+ *
+ * @author lprimak
+ */
+public class DeploymentExtension implements ISuiteListener {
     @SuppressWarnings({"checkstyle:VisibilityModifier", "checkstyle:JavadocVariable"})
     public static int numOfDeployments;
 
     @Override
-    public void beforeAll(ExtensionContext extensionContext) throws Exception {
-        extensionContext.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put(this.getClass().getName(), this);
-    }
-
-    @Override
-    public void close() throws Throwable {
-        // is zero if running in container, which we can safely ignore here
-        assertThat(numOfDeployments).withFailMessage("Should only be one deployment").isIn(0, 1);
+    public void onFinish(ISuite suite) {
+        assertThat(numOfDeployments).withFailMessage("Should only be one deployment").isEqualTo(1);
     }
 }
