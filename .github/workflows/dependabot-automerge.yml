@@ -60,7 +60,7 @@ jobs:
               core.info('All checks are done, merging');
               if (pr.user.login.startsWith('dependabot')) {
                 await github.rest.pulls.merge({
-                  owner, repo, pull_number: pr.prNumber, merge_method: 'squash',
+                  owner, repo, pull_number: pr.number, merge_method: 'squash',
                 });
               }
             }
