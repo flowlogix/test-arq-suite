@@ -15,20 +15,16 @@
  */
 package com.flowlogix.arqsuite;
 
-import com.flowlogix.testcontainers.PayaraServerLifecycleExtension;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.testng.annotations.Test;
 
 /**
  *
  * @author lprimak
  */
-@ExtendWith(PayaraServerLifecycleExtension.class)
-@ExtendWith(ArquillianExtension.class)
-class DeploymentTwoIT {
+class DeploymentTwoIT extends Arquillian {
     @Test
     void one() {
 
@@ -36,6 +32,7 @@ class DeploymentTwoIT {
 
     @Test
     void two() {
+
     }
 
     @Deployment

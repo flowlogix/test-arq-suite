@@ -19,7 +19,7 @@ import com.flowlogix.util.ShrinkWrapManipulator;
 import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import static com.flowlogix.arqsuite.extensions.DeploymentChecker.numOfDeployments;
+import static com.flowlogix.arqsuite.extensions.DeploymentExtension.numOfDeployments;
 
 /**
  *
@@ -31,6 +31,8 @@ class Deployments {
     @Deployment
     static WebArchive deploy() {
         ++numOfDeployments;
-        return ShrinkWrapManipulator.createDeployment(WebArchive.class).addPackages(true, Deployments.class.getPackage());
+        var archive = ShrinkWrapManipulator.createDeployment(WebArchive.class)
+                .addPackage(Deployments.class.getPackage());
+        return ShrinkWrapManipulator.packageSlf4j(archive);
     }
 }
