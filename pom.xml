@@ -24,6 +24,7 @@
         <test.redirect.to.file>false</test.redirect.to.file>
         <it.test.parallel>none</it.test.parallel>
         <arquillian.payara.version>3.1</arquillian.payara.version>
+        <mockito.agentOptions/>
     </properties>
 
     <dependencies>
