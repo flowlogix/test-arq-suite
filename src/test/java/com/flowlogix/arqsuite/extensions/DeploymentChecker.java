@@ -19,7 +19,7 @@ import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DeploymentChecker implements BeforeAllCallback, ExtensionContext.Store.CloseableResource {
+public class DeploymentChecker implements BeforeAllCallback, AutoCloseable {
     @SuppressWarnings({"checkstyle:VisibilityModifier", "checkstyle:JavadocVariable"})
     public static int numOfDeployments;
 
@@ -29,7 +29,7 @@ public class DeploymentChecker implements BeforeAllCallback, ExtensionContext.St
     }
 
     @Override
-    public void close() throws Throwable {
+    public void close() {
         // is zero if running in container, which we can safely ignore here
         assertThat(numOfDeployments).withFailMessage("Should only be one deployment").isIn(0, 1);
     }
