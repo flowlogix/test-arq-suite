@@ -19,7 +19,8 @@
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <payara.start.disable>true</payara.start.disable>
-        <arquillian.launch>payara-docker</arquillian.launch>
+        <arquillian.container>payara-docker</arquillian.container>
+        <testcontainers.skip>false</testcontainers.skip>
         <checkstyle.supressionsLocation>${basedir}/src/checkstyle/suppressions.xml</checkstyle.supressionsLocation>
         <test.redirect.to.file>false</test.redirect.to.file>
         <it.test.parallel>none</it.test.parallel>
@@ -119,13 +120,14 @@
         <profile>
             <id>payara-server-local</id>
             <properties>
-                <arquillian.launch>payara</arquillian.launch>
+                <arquillian.container>payara</arquillian.container>
+                <testcontainers.skip>true</testcontainers.skip>
             </properties>
         </profile>
         <profile>
             <id>payara-server-managed</id>
             <properties>
-                <arquillian.launch>payara</arquillian.launch>
+                <arquillian.container>payara</arquillian.container>
                 <payara.start.disable>${skipITs}</payara.start.disable>
                 <testcontainers.skip>true</testcontainers.skip>
             </properties>
