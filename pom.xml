@@ -21,7 +21,7 @@
         <payara.start.disable>true</payara.start.disable>
         <arquillian.container>payara-docker</arquillian.container>
         <testcontainers.skip>false</testcontainers.skip>
-        <checkstyle.supressionsLocation>${basedir}/src/checkstyle/suppressions.xml</checkstyle.supressionsLocation>
+        <checkstyle.suppressionsLocation>${basedir}/src/checkstyle/suppressions.xml</checkstyle.suppressionsLocation>
         <test.redirect.to.file>false</test.redirect.to.file>
         <it.test.parallel>none</it.test.parallel>
         <arquillian.payara.version>3.1</arquillian.payara.version>
