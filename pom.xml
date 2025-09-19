@@ -43,7 +43,7 @@
         <dependency>
             <groupId>com.flowlogix</groupId>
             <artifactId>flowlogix-jee</artifactId>
-            <version>9.0.11</version>
+            <version>10</version>
             <scope>test</scope>
         </dependency>
 
