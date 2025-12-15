@@ -24,7 +24,6 @@
         <checkstyle.suppressionsLocation>${basedir}/src/checkstyle/suppressions.xml</checkstyle.suppressionsLocation>
         <test.redirect.to.file>false</test.redirect.to.file>
         <it.test.parallel>none</it.test.parallel>
-        <arquillian.payara.version>3.1</arquillian.payara.version>
         <mockito.agentOptions/>
     </properties>
 
@@ -84,13 +83,6 @@
             <groupId>com.flowlogix</groupId>
             <artifactId>flowlogix-jee</artifactId>
             <version>11</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>fish.payara.arquillian</groupId>
-            <artifactId>arquillian-payara-server-remote</artifactId>
-            <version>${arquillian.payara.version}</version>
             <scope>test</scope>
         </dependency>
 
