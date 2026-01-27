@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.flowlogix.depchain</groupId>
             <artifactId>integration-test</artifactId>
-            <version>107</version>
+            <version>108</version>
             <scope>test</scope>
             <exclusions>
                 <exclusion>
