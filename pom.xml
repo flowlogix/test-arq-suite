@@ -36,7 +36,7 @@
         <dependency>
             <groupId>com.flowlogix.depchain</groupId>
             <artifactId>integration-test</artifactId>
-            <version>120</version>
+            <version>121</version>
             <scope>test</scope>
         </dependency>
         <dependency>
