@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE arquillian [
     <!ENTITY dockerConfig "
-        <configuration>
-            <property name='adminHttps'>true</property>
-            <property name='ignoreCertificates'>true</property>
-            <property name='adminUser'>admin</property>
-            <property name='adminPassword'>admin</property>
-        </configuration>
+        <property name='adminHttps'>true</property>
+        <property name='ignoreCertificates'>true</property>
+        <property name='adminUser'>admin</property>
+        <property name='adminPassword'>admin</property>
     ">
 ]>
 
@@ -16,10 +14,14 @@
 
     <container qualifier="payara"/>
     <container qualifier="payara-docker">
-        &dockerConfig;
+        <configuration>
+            &dockerConfig;
+        </configuration>
     </container>
     <container qualifier="glassfish"/>
     <container qualifier="glassfish-docker">
-        &dockerConfig;
+        <configuration>
+            &dockerConfig;
+        </configuration>
     </container>
 </arquillian>
