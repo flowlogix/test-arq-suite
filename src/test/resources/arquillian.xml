@@ -1,15 +1,25 @@
 <?xml version="1.0"?>
+<!DOCTYPE arquillian [
+    <!ENTITY dockerConfig "
+        <configuration>
+            <property name='adminHttps'>true</property>
+            <property name='ignoreCertificates'>true</property>
+            <property name='adminUser'>admin</property>
+            <property name='adminPassword'>admin</property>
+        </configuration>
+    ">
+]>
+
 <arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://jboss.org/schema/arquillian"
-    xsi:schemaLocation="http://jboss.org/schema/arquillian http://www.jboss.org/schema/arquillian/arquillian_1_0.xsd">
+    xsi:schemaLocation="http://jboss.org/schema/arquillian https://www.jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
-    <container qualifier="payara-docker">
-        <configuration>
-            <property name="adminHttps">true</property>
-            <property name="ignoreCertificates">true</property>
-            <property name="adminUser">admin</property>
-            <property name="adminPassword">admin</property>
-        </configuration>
-    </container>
     <container qualifier="payara"/>
+    <container qualifier="payara-docker">
+        &dockerConfig;
+    </container>
+    <container qualifier="glassfish"/>
+    <container qualifier="glassfish-docker">
+        &dockerConfig;
+    </container>
 </arquillian>
