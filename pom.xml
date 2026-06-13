@@ -13,13 +13,13 @@
     <parent>
         <groupId>com.flowlogix</groupId>
         <artifactId>payara-pom</artifactId>
-        <version>125</version>
+        <version>126</version>
     </parent>
 
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
-        <payara.start.disable>true</payara.start.disable>
-        <arquillian.container>payara-docker</arquillian.container>
+        <server.start.disable>true</server.start.disable>
+        <arquillian.container>${server.arquillian.container.docker}</arquillian.container>
         <testcontainers.skip>false</testcontainers.skip>
         <checkstyle.suppressionsLocation>${basedir}/src/checkstyle/suppressions.xml</checkstyle.suppressionsLocation>
         <test.redirect.to.file>false</test.redirect.to.file>
@@ -110,17 +110,17 @@
 
     <profiles>
         <profile>
-            <id>payara-server-local</id>
+            <id>server-local</id>
             <properties>
-                <arquillian.container>payara</arquillian.container>
+                <arquillian.container>${server.arquillian.container}</arquillian.container>
                 <testcontainers.skip>true</testcontainers.skip>
             </properties>
         </profile>
         <profile>
-            <id>payara-server-managed</id>
+            <id>server-managed</id>
             <properties>
-                <arquillian.container>payara</arquillian.container>
-                <payara.start.disable>${skipITs}</payara.start.disable>
+                <arquillian.container>${server.arquillian.container}</arquillian.container>
+                <server.start.disable>${skipITs}</server.start.disable>
                 <testcontainers.skip>true</testcontainers.skip>
             </properties>
         </profile>
