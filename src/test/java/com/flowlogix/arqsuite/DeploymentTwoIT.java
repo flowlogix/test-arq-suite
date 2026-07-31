@@ -20,10 +20,6 @@ import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.annotations.Test;
 
-/**
- *
- * @author lprimak
- */
 class DeploymentTwoIT extends Arquillian {
     @Test
     void one() {

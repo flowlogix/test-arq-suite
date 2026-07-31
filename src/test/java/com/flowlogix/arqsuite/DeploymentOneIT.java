@@ -23,10 +23,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.annotations.Test;
 
-/**
- *
- * @author lprimak
- */
 class DeploymentOneIT extends Arquillian {
     @Resource
     DataSource ds;
