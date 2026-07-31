@@ -22,10 +22,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-/**
- *
- * @author lprimak
- */
 @AppServerLifecycle
 @ExtendWith(DeploymentChecker.class)
 class DeploymentOneIT {
