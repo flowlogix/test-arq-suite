@@ -21,10 +21,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import static com.flowlogix.arqsuite.extensions.DeploymentChecker.numOfDeployments;
 
-/**
- *
- * @author lprimak
- */
 @ArquillianSuiteDeployment
 @SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 class Deployments {
