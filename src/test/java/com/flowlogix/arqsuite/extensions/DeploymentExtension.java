@@ -19,10 +19,6 @@ import org.testng.ISuite;
 import org.testng.ISuiteListener;
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- *
- * @author lprimak
- */
 public class DeploymentExtension implements ISuiteListener {
     @SuppressWarnings({"checkstyle:VisibilityModifier", "checkstyle:JavadocVariable"})
     public static int numOfDeployments;
