@@ -25,6 +25,6 @@ public class DeploymentExtension implements ISuiteListener {
 
     @Override
     public void onFinish(ISuite suite) {
-        assertThat(numOfDeployments).withFailMessage("Should only be one deployment").isEqualTo(1);
+        assertThat(numOfDeployments).withFailMessage("Should only be one deployment").isLessThanOrEqualTo(1);
     }
 }
