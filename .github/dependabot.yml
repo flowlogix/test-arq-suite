@@ -5,6 +5,10 @@ updates:
     open-pull-requests-limit: 50
     schedule:
       interval: "daily"
+    groups:
+      maven-dependencies:
+        patterns:
+          - '*'
 
   - package-ecosystem: "maven"
     directory: "/"
@@ -12,3 +16,7 @@ updates:
     open-pull-requests-limit: 50
     schedule:
       interval: "daily"
+    groups:
+      github-actions-dependencies:
+        patterns:
+          - '*'
