@@ -13,7 +13,7 @@
     <parent>
         <groupId>com.flowlogix</groupId>
         <artifactId>payara-pom</artifactId>
-        <version>145</version>
+        <version>146</version>
     </parent>
 
     <properties>
@@ -36,13 +36,13 @@
         <dependency>
             <groupId>com.flowlogix.depchain</groupId>
             <artifactId>integration-test</artifactId>
-            <version>131</version>
+            <version>132</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.flowlogix</groupId>
             <artifactId>flowlogix-jee</artifactId>
-            <version>11.7</version>
+            <version>11.7.1</version>
             <scope>test</scope>
         </dependency>
 
