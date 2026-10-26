@@ -13,7 +13,7 @@
     <parent>
         <groupId>com.flowlogix</groupId>
         <artifactId>payara-pom</artifactId>
-        <version>146</version>
+        <version>147</version>
     </parent>
 
     <properties>
@@ -37,7 +37,7 @@
         <dependency>
             <groupId>com.flowlogix.depchain</groupId>
             <artifactId>integration-test-ng</artifactId>
-            <version>133</version>
+            <version>135</version>
             <scope>test</scope>
         </dependency>
 
