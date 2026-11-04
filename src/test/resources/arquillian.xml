@@ -24,4 +24,8 @@
             &dockerConfig;
         </configuration>
     </container>
+    <extension qualifier="flowlogix">
+        <property name="archiveType">war</property>
+        <property name="packageSlf4j">true</property>
+    </extension>
 </arquillian>
