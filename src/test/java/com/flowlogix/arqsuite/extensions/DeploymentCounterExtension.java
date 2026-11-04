@@ -13,22 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.flowlogix.arqsuite;
+package com.flowlogix.arqsuite.extensions;
 
-import com.flowlogix.util.ShrinkWrapManipulator;
-import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.arquillian.container.spi.event.container.AfterDeploy;
+import org.jboss.arquillian.core.api.annotation.Observes;
+import org.jboss.arquillian.core.spi.LoadableExtension;
 import static com.flowlogix.arqsuite.extensions.DeploymentExtension.numOfDeployments;
 
-@ArquillianSuiteDeployment
-@SuppressWarnings("checkstyle:HideUtilityClassConstructor")
-class Deployments {
-    @Deployment
-    static WebArchive deploy() {
-        ++numOfDeployments;
-        var archive = ShrinkWrapManipulator.createDeployment(WebArchive.class)
-                .addPackage(Deployments.class.getPackage());
-        return ShrinkWrapManipulator.packageSlf4j(archive);
+public class DeploymentCounterExtension implements LoadableExtension {
+    @Override
+    public void register(ExtensionBuilder builder) {
+        builder.observer(DeploymentObserver.class);
+    }
+
+    public static class DeploymentObserver {
+        @SuppressWarnings("unused")
+        public void afterDeploy(@Observes AfterDeploy event) {
+            ++numOfDeployments;
+        }
     }
 }

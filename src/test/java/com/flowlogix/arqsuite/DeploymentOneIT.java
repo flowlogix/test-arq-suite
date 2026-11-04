@@ -17,12 +17,12 @@ package com.flowlogix.arqsuite;
 
 import jakarta.annotation.Resource;
 import javax.sql.DataSource;
-import org.jboss.arquillian.container.test.api.Deployment;
+import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
 import org.jboss.arquillian.testng.Arquillian;
 import static org.assertj.core.api.Assertions.assertThat;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.annotations.Test;
 
+@ArquillianSuiteDeployment
 class DeploymentOneIT extends Arquillian {
     @Resource
     DataSource ds;
@@ -34,10 +34,5 @@ class DeploymentOneIT extends Arquillian {
 
     @Test
     void two() {
-    }
-
-    @Deployment
-    static WebArchive deploy() {
-        return Deployments.deploy();
     }
 }
